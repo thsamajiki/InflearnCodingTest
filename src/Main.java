@@ -7,8 +7,8 @@ public class Main {
 
         str = str.toLowerCase();
         t = Character.toLowerCase(t);
-        for(int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == t) {
+        for(char ch: str.toCharArray()) {
+            if (ch == t) {
                 answer++;
             }
         }
