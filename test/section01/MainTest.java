@@ -1,4 +1,7 @@
+package section01;
+
 import org.junit.jupiter.api.Test;
+import section01.Main;
 
 import static org.junit.jupiter.api.Assertions.*;
 

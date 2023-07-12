@@ -1,4 +1,5 @@
-import java.util.*;
+package section01;
+
 import java.io.*;
 
 public class Main {
