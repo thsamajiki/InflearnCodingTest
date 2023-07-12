@@ -7,10 +7,10 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         for(char ch: str.toCharArray()) {
-            if (Character.isLowerCase(ch)) {
+            if (ch >= 97 && ch < 123) {
                 ch = Character.toUpperCase(ch);
                 sb.append(ch);
-            } else {
+            } else if (ch >= 65 && ch < 91){
                 ch = Character.toLowerCase(ch);
                 sb.append(ch);
             }
