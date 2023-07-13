@@ -4,19 +4,18 @@ import java.io.*;
 
 public class Main {
     public String solution(String str) {
-        StringBuilder sb = new StringBuilder();
+        String[] words = str.split(" ");
 
-        for(char ch: str.toCharArray()) {
-            if (ch >= 97 && ch < 123) {
-                ch = Character.toUpperCase(ch);
-                sb.append(ch);
-            } else if (ch >= 65 && ch < 91){
-                ch = Character.toLowerCase(ch);
-                sb.append(ch);
+        int maxLength = 0;
+        String maxWord = "";
+        for(String word: words) {
+            if (maxLength < word.length()) {
+                maxLength = word.length();
+                maxWord = word;
             }
         }
 
-        return sb.toString();
+        return maxWord;
     }
 
     public static void main(String[] args) throws IOException {
