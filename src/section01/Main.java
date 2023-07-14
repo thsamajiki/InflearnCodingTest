@@ -5,14 +5,11 @@ import java.util.*;
 
 public class Main {
     public String solution(String str) {
-        String answer = "YES";
-        str = str.toLowerCase();
-        int len = str.length();
+        String answer = "NO";
+        String reverseStr = new StringBuilder(str).reverse().toString();
 
-        for(int i = 0; i < len / 2; i++) {
-            if (str.charAt(i) != str.charAt(len - 1 - i)) {
-                return "NO";
-            }
+        if (str.equalsIgnoreCase(reverseStr)) {
+            answer = "YES";
         }
 
         return answer;
