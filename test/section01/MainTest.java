@@ -13,7 +13,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("kset", main.solution("ksekkset"));
+        assertEquals("YES", main.solution("gooG"));
     }
 
     @Test
