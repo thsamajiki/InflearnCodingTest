@@ -13,7 +13,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertLinesMatch(Arrays.asList("doog", "emiT", "giB"), main.solution(3, new String[]{ "good", "Time", "Big" }));
+        assertEquals("S#T!EG*b@a", "a#b!GE*T@S");
     }
 
     @Test
