@@ -4,40 +4,36 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public ArrayList<String> solution(int n, String[] str) {
-        ArrayList<String> reverseWordList = new ArrayList<>();
+    public String solution(String str) {
+        char[] charArray = str.toCharArray();
+        int left = 0;
+        int right = str.length() - 1;
 
-        for (String word : str) {
-            char[] s = word.toCharArray();
-            int lt = 0, rt = word.length() - 1;
-            while (lt < rt) {
-                char temp = s[lt];
-                s[lt] = s[rt];
-                s[rt] = temp;
-                lt++;
-                rt--;
+        while (left < right) {
+            if (charArray[left] < 65 || (charArray[left] >= 91 && charArray[left] < 97) || charArray[left] >= 123) {
+                left++;
+            } else if (charArray[right] < 65 || (charArray[right] >= 91 && charArray[right] < 97) || charArray[right] >= 123) {
+                right--;
+            } else {
+                char temp = charArray[left];
+                charArray[left] = charArray[right];
+                charArray[right] = temp;
+                left++;
+                right--;
             }
-
-            String reverseWord = String.valueOf(s);
-            reverseWordList.add(reverseWord);
         }
 
-        return reverseWordList;
+        String reverseWord = String.valueOf(charArray);
+
+        return reverseWord;
     }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        String[] wordArr = new String[n];
+        String str = br.readLine();
 
-        for (int i = 0; i < n; i++) {
-            wordArr[i] = br.readLine();
-        }
-
-        for (String word: main.solution(n, wordArr)) {
-            System.out.println(word);
-        }
+        System.out.println(main.solution(str));
     }
 }
