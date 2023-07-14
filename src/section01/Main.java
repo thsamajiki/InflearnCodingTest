@@ -13,7 +13,7 @@ public class Main {
         String answer = "";
         loop : while(left < right) {
             for(int i = 0; i < charArray.length / 2; i++) {
-                if (str.charAt(left + i) == str.charAt(right - i)) {
+                if (str.charAt(i) == str.charAt(right - i)) {
                     left++;
                     right--;
                     answer = "YES";
