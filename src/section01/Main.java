@@ -8,8 +8,18 @@ public class Main {
         ArrayList<String> reverseWordList = new ArrayList<>();
 
         for (String word : str) {
-            String temp = new StringBuilder(word).reverse().toString();
-            reverseWordList.add(temp);
+            char[] s = word.toCharArray();
+            int lt = 0, rt = word.length() - 1;
+            while (lt < rt) {
+                char temp = s[lt];
+                s[lt] = s[rt];
+                s[rt] = temp;
+                lt++;
+                rt--;
+            }
+
+            String reverseWord = String.valueOf(s);
+            reverseWordList.add(reverseWord);
         }
 
         return reverseWordList;
