@@ -4,15 +4,16 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public String solution(String s) {
-        String answer = "NO";
-        s = s.toUpperCase().replaceAll("[^A-Z]", ""); // 대문자 A-Z가 아니면 ""로 대체함
+    public int solution(String s) {
+        StringBuilder numStr = new StringBuilder();
 
-        String reverseS = new StringBuilder(s).reverse().toString();
-
-        if (s.equals(reverseS)) {
-            answer = "YES";
+        for (char ch : s.toCharArray()) {
+            if (ch - '0' >= 0 && ch - '0' < 10) {
+                numStr.append(ch);
+            }
         }
+
+        int answer = Integer.parseInt(numStr.toString());
 
         return answer;
     }
