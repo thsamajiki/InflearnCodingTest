@@ -10,9 +10,9 @@ public class Main {
         int right = str.length() - 1;
 
         while (left < right) {
-            if (charArray[left] < 65 || (charArray[left] >= 91 && charArray[left] < 97) || charArray[left] >= 123) {
+            if (!Character.isAlphabetic(charArray[left])) {
                 left++;
-            } else if (charArray[right] < 65 || (charArray[right] >= 91 && charArray[right] < 97) || charArray[right] >= 123) {
+            } else if (!Character.isAlphabetic(charArray[right])) {
                 right--;
             } else {
                 char temp = charArray[left];
