@@ -5,27 +5,15 @@ import java.util.*;
 
 public class Main {
     public String solution(String str) {
-        char[] charArray = str.toCharArray();
-        int left = 0;
-        int right = str.length() - 1;
+        String answer = "";
 
-        while (left < right) {
-            if (!Character.isAlphabetic(charArray[left])) {
-                left++;
-            } else if (!Character.isAlphabetic(charArray[right])) {
-                right--;
-            } else {
-                char temp = charArray[left];
-                charArray[left] = charArray[right];
-                charArray[right] = temp;
-                left++;
-                right--;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.indexOf(str.charAt(i)) == i) { // 예 : str = "ksekkset" 일 때, 2번째 k(우변)은 3이지만, str.indexOf(str.charAt(i))(좌변)은 0이므로 중복 문자가 걸러진다.
+                answer += str.charAt(i);
             }
         }
 
-        String reverseWord = String.valueOf(charArray);
-
-        return reverseWord;
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
