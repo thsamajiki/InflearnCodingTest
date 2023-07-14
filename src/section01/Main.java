@@ -4,11 +4,13 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public String solution(String str) {
+    public String solution(String s) {
         String answer = "NO";
-        String reverseStr = new StringBuilder(str).reverse().toString();
+        s = s.toUpperCase().replaceAll("[^A-Z]", ""); // 대문자 A-Z가 아니면 ""로 대체함
 
-        if (str.equalsIgnoreCase(reverseStr)) {
+        String reverseS = new StringBuilder(s).reverse().toString();
+
+        if (s.equals(reverseS)) {
             answer = "YES";
         }
 
