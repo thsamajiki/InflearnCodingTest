@@ -26,9 +26,8 @@ public class Main {
             wordArr[i] = br.readLine();
         }
 
-        ArrayList<String> answer = main.solution(n, wordArr);
-        for (int i = 0; i < n; i++) {
-            System.out.println(answer.get(i));
+        for (String word: main.solution(n, wordArr)) {
+            System.out.println(word);
         }
     }
 }
