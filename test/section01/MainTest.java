@@ -13,7 +13,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("S#T!EG*b@a", "a#b!GE*T@S");
+        assertEquals("kset", main.solution("ksekkset"));
     }
 
     @Test
