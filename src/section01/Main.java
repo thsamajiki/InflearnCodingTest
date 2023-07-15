@@ -4,21 +4,14 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public String solution(String s) {
+    public String solution(int n, String s) {
         String answer = "";
-        s = s + " "; // 마지막 문자 개수를 제대로 카운트하기 위해 공백문자를 추가함
-        int count = 1;
 
-        for (int i = 0; i < s.length() - 1; i++) {
-            if (s.charAt(i) == s.charAt(i + 1)) {
-                count++;
-            } else {
-                answer += s.charAt(i);
-                if (count > 1) {
-                    answer += String.valueOf(count);
-                }
-                count = 1;
-            }
+        for (int i = 0; i < n; i++) {
+            String temp = s.substring(0, 7).replace('#', '1').replace('*', '0');
+            int num = Integer.parseInt(temp, 2); // 2진수를 10진수화
+            answer += (char)num;
+            s = s.substring(7);
         }
 
         return answer;
@@ -28,8 +21,9 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String str = br.readLine();
+        int n = Integer.parseInt(br.readLine());
+        String s = br.readLine();
 
-        System.out.println(main.solution(str));
+        System.out.println(main.solution(n, s));
     }
 }
