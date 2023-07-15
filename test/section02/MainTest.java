@@ -12,7 +12,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(new ArrayList<>(Arrays.asList(7, 9, 6, 12)), main.solution(6, new int[] { 7, 3, 9, 5, 6, 12 }));
+        assertEquals(5, main.solution(8, new int[] { 130, 135, 148, 140, 145, 150, 150, 153 }));
     }
 
     @Test
