@@ -12,7 +12,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(5, main.solution(8, new int[] { 130, 135, 148, 140, 145, 150, 150, 153 }));
+        assertEquals("ABABD", main.solution(5, new int[] { 2, 3, 3, 1, 3 }, new int[] { 1, 1, 2, 2, 3 }));
     }
 
     @Test
