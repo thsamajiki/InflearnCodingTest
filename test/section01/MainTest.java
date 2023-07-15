@@ -13,7 +13,8 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertArrayEquals(new int[] { 1, 0, 1, 2, 1, 0, 1, 2, 2, 1, 0 }, main.solution("teachermode", 'e'));
+        assertEquals("K2HS7E", main.solution("KKHSSSSSSSE"));
+        assertEquals("KST3SE2KFK3DJ2G2", main.solution("KSTTTSEEKFKKKDJJGG"));
     }
 
     @Test
