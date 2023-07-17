@@ -4,35 +4,26 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public boolean isPrime(int num) {
-        if (num == 1) {
-            return false;
+    public int solution(int n, int[] arr) {
+        int[] scoreArray = new int[arr.length];
+        if (arr[0] == 1) {
+            scoreArray[0] = 1;
+        } else {
+            scoreArray[0] = 0;
         }
 
-        for (int i = 2; i < num; i++) {
-            if (num % i == 0) {
-                return false;
-            }
-        }
+        int answer = scoreArray[0];
 
-        return true;
-    }
-
-    public ArrayList<Integer> solution(int n, int[] arr) {
-        ArrayList<Integer> answer = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            int temp = arr[i];
-            int res = 0;
-            while (temp > 0) {
-                int t = temp % 10;  // 일의 자리숫자를 찾아냄
-                res = res * 10 + t; // 일의 자리숫자를 새로운 변수의 일의 자리수로 옮김
-                temp /= 10; // 기존의 일의 자리숫자가 사라짐
+        for (int i = 0; i < arr.length - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                scoreArray[i + 1] = 0;
+            } else if (arr[i] == 0 && arr[i + 1] == 0) {
+                scoreArray[i + 1] = 0;
+            } else {
+                scoreArray[i + 1] = scoreArray[i] + 1;
             }
 
-            if (isPrime(res)) {
-                answer.add(res);
-            }
+            answer += scoreArray[i + 1];
         }
 
         return answer;
@@ -49,8 +40,6 @@ public class Main {
             array[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int num : main.solution(n, array)) {
-            System.out.print(num + " ");
-        }
+        System.out.println(main.solution(n, array));
     }
 }
