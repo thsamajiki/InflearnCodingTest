@@ -4,17 +4,20 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public void solution(int n) {
-        int a = 1;
-        int b = 1;
-        int c;
-        System.out.print(a + " " + b + " ");
-        for (int i = 2; i < n; i++) {
-            c = a + b;
-            System.out.print(c + " ");
-            a = b;
-            b = c;
+    public int solution(int n) {
+        int answer = 0;
+
+        int[] array = new int[n + 1];
+        for (int i = 2; i <= n; i++) {
+            if (array[i] == 0) {
+                answer++;
+                for (int j = i; j <= n; j += i) {
+                    array[j] = 1;
+                }
+            }
         }
+
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
@@ -23,6 +26,6 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        main.solution(n);
+        System.out.println(main.solution(n));
     }
 }
