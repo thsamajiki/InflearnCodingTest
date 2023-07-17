@@ -4,17 +4,18 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public int solution(int n, int[] arr) {
-        int answer = 0;
-        int count = 0;
+    public int[] solution(int n, int[] arr) {
+        int[] answer = new int[n];
 
         for (int i = 0; i < n; i++) {
-            if (arr[i] == 1) {
-                count++;
-                answer += count;
-            } else {
-                count = 0;
+            int rank = 1;
+
+            for (int j = 0; j < n; j++) {
+                if (arr[j] > arr[i]) {
+                    rank++;
+                }
             }
+            answer[i] = rank;
         }
 
         return answer;
@@ -31,6 +32,8 @@ public class Main {
             array[i] = Integer.parseInt(st.nextToken());
         }
 
-        System.out.println(main.solution(n, array));
+        for (int rank : main.solution(n, array)) {
+            System.out.print(rank + " ");
+        }
     }
 }
