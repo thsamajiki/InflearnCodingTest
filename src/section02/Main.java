@@ -5,38 +5,26 @@ import java.util.*;
 
 public class Main {
     public int solution(int n, int[][] arr) {
-        int temp = 0;
-        int maxRow = 0;
+        int answer = Integer.MIN_VALUE;
+        int sum1, sum2;
         for (int i = 0; i < n; i++) {
+            sum1 = sum2 = 0;
             for (int j = 0; j < n; j++) {
-                temp += arr[i][j];
+                sum1 += arr[i][j];
+                sum2 += arr[j][i];
             }
-            maxRow = Math.max(maxRow, temp);
-            temp = 0;
+
+            answer = Math.max(answer, sum1);
+            answer = Math.max(answer, sum2);
         }
 
-        int maxCol = 0;
+        sum1 = sum2 = 0;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                temp += arr[j][i];
-            }
-            maxCol = Math.max(maxCol, temp);
-            temp = 0;
+            sum1 += arr[i][i];
+            sum2 += arr[i][n - 1 - i];
         }
-
-        int maxDiagonal = 0;
-        for (int i = 0; i < n; i++) {
-            temp += arr[i][i];
-            maxDiagonal = Math.max(maxDiagonal, temp);
-        }
-        temp = 0;
-
-        for (int i = 0; i < n; i++) {
-            temp += arr[i][n - 1 - i];
-            maxDiagonal = Math.max(maxDiagonal, temp);
-        }
-
-        int answer = Math.max(maxRow, Math.max(maxCol, maxDiagonal));
+        answer = Math.max(answer, sum1);
+        answer = Math.max(answer, sum2);
 
         return answer;
     }
