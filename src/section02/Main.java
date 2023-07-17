@@ -5,25 +5,16 @@ import java.util.*;
 
 public class Main {
     public int solution(int n, int[] arr) {
-        int[] scoreArray = new int[arr.length];
-        if (arr[0] == 1) {
-            scoreArray[0] = 1;
-        } else {
-            scoreArray[0] = 0;
-        }
+        int answer = 0;
+        int count = 0;
 
-        int answer = scoreArray[0];
-
-        for (int i = 0; i < arr.length - 1; i++) {
-            if (arr[i] > arr[i + 1]) {
-                scoreArray[i + 1] = 0;
-            } else if (arr[i] == 0 && arr[i + 1] == 0) {
-                scoreArray[i + 1] = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 1) {
+                count++;
+                answer += count;
             } else {
-                scoreArray[i + 1] = scoreArray[i] + 1;
+                count = 0;
             }
-
-            answer += scoreArray[i + 1];
         }
 
         return answer;
