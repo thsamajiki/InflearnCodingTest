@@ -12,7 +12,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertArrayEquals(new int[] { 1, 1, 2, 3, 5, 8, 13, 21, 34, 55 }, main.solution(10));
+        assertEquals(8, main.solution(20));
     }
 
     @Test
