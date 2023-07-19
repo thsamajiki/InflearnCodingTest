@@ -13,10 +13,7 @@ public class Main {
             for (int j = 1; j <= n; j++) { // j번 학생
                 for (int k = 1; k <= 5; k++) {  // k : 학년
                     if (arr[i][k] == arr[j][k]) {
-                        System.out.println("arr[" + i +"][" + k + "] : " + arr[i][k] + " / arr[" + j +"][" + k + "] : " + arr[j][k]);
                         count++;
-                        System.out.println("count : "+ count);
-                        System.out.println("-------------------------------");
                         break;
                     }
                 }
