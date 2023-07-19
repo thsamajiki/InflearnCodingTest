@@ -4,26 +4,27 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    int[] dx = { -1, 0, 1, 0 };
-    int[] dy = { 0, 1, 0, -1 };
-
     public int solution(int n, int[][] arr) {
         int answer = 0;
+        int max = Integer.MIN_VALUE;
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                boolean flag = true; // 봉우리인지 판별하는 역할
-                for (int k = 0; k < 4; k++) {
-                    int nextX = i + dx[k];
-                    int nextY = j + dy[k];
-                    if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && arr[nextX][nextY] >= arr[i][j]) { // 범위를 조건식 앞에 두어서 ArrayIndexOutOfBoundsException 방지
-                        flag = false;
+        for (int i = 1; i <= n; i++) { // i번 학생
+            int count = 0;
+            for (int j = 1; j <= n; j++) { // j번 학생
+                for (int k = 1; k <= 5; k++) {  // k : 학년
+                    if (arr[i][k] == arr[j][k]) {
+                        System.out.println("arr[" + i +"][" + k + "] : " + arr[i][k] + " / arr[" + j +"][" + k + "] : " + arr[j][k]);
+                        count++;
+                        System.out.println("count : "+ count);
+                        System.out.println("-------------------------------");
                         break;
                     }
                 }
-                if (flag) {
-                    answer++;
-                }
+            }
+
+            if (count > max) {
+                max = count;
+                answer = i;
             }
         }
 
@@ -35,14 +36,14 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        int[][] map = new int[n][n];
-        for (int i = 0; i < n; i++) {
+        int[][] arr = new int[n + 1][6];
+        for (int i = 1; i <= n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
-                map[i][j] = Integer.parseInt(st.nextToken());
+            for (int j = 1; j <= 5; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        System.out.println(main.solution(n, map));
+        System.out.println(main.solution(n, arr));
     }
 }
