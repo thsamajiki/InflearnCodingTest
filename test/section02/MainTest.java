@@ -12,11 +12,11 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(10, main.solution(5, new int[][] { { 5, 3, 7, 2, 3 },
-                                                                        { 3, 7, 1, 6, 1 },
-                                                                        { 7, 2, 5, 3, 4 },
-                                                                        { 4, 3, 6, 4, 1 },
-                                                                        { 8, 7, 3, 5, 2 }
+        assertEquals(4, main.solution(5, new int[][] { { 2, 3, 1, 7, 3 },
+                                                                        { 4, 1, 9, 6, 8 },
+                                                                        { 5, 5, 2, 4, 4 },
+                                                                        { 6, 5, 2, 6, 7 },
+                                                                        { 8, 4, 2, 2, 2 }
                                                                 })
         );
     }
