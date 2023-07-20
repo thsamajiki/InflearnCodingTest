@@ -12,7 +12,7 @@ public class Main {
             int count = 0;
             for (int j = 1; j <= n; j++) { // j번 학생
                 for (int k = 1; k <= 5; k++) {  // k : 학년
-                    if (arr[i][k] == arr[j][k]) {
+                    if (i != j && arr[i][k] == arr[j][k]) {
                         count++;
                         break;
                     }
