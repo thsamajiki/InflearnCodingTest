@@ -5,22 +5,19 @@ import java.io.*;
 
 public class Main {
     public String solution(String str) {
-        String answer = "YES";
+        String answer = "";
         Stack<Character> stack = new Stack<>();
 
         for (char x : str.toCharArray()) {
-            if (x == '(') {
-                stack.push(x);
+            if (x == ')') {
+                while (stack.pop() != '(');  // stack에서 꺼낸 값이 '('이면 while문이 멈춘다.
             } else {
-                if (stack.isEmpty()) {
-                    return "NO"; // ')'의 짝이 되어야 할 '('이 없는 경우
-                }
-                stack.pop();
+                stack.push(x);
             }
         }
 
-        if (!stack.isEmpty()) {
-            return "NO";
+        for (int i = 0; i < stack.size(); i++) {
+            answer += stack.get(i);
         }
 
         return answer;
