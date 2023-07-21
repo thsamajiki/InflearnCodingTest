@@ -9,7 +9,8 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals('C', main.solution(15, "BACBACCACCBDEDE"));
+        assertEquals("YES", main.solution("AbaAeCe", "baeeACA"));
+        assertEquals("NO", main.solution("abaCC", "Caaab"));
     }
 
     @Test
