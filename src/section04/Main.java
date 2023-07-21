@@ -8,21 +8,18 @@ import java.util.Map;
 
 public class Main {
     public char solution(int n, String s) {
+        char answer = ' ';
         Map<Character, Integer> map = new HashMap<>();
 
         for (char ch : s.toCharArray()) {
             map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
 
-        int max = 0;
-        for (char ch : map.keySet()) {
-            max = Math.max(max, map.get(ch));
-        }
-
-        char answer = 'a';
-        for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-            if (entry.getValue().equals(max)) {
-                answer = entry.getKey();
+        int max = Integer.MIN_VALUE;
+        for (char key : map.keySet()) {
+            if (map.get(key) > max) {
+                max = map.get(key);
+                answer = key;
             }
         }
 
