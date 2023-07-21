@@ -5,18 +5,19 @@ import java.io.*;
 
 public class Main {
     public String solution(String s1, String s2) {
-        String answer = "";
+        String answer = "YES";
 
-        char[] chArr1 = s1.toCharArray();
-        Arrays.sort(chArr1);
+        Map<Character, Integer> map = new HashMap<>();
 
-        char[] chArr2 = s2.toCharArray();
-        Arrays.sort(chArr2);
-
-        if (Arrays.equals(chArr1, chArr2)) {
-            answer = "YES";
-        } else {
-            answer = "NO";
+        for (char ch : s1.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        for (char ch : s2.toCharArray()) {
+            if (!map.containsKey(ch) || map.get(ch) == 0) { // 키값이 하나라도 0이 아니면 아나그램이 아니다.
+                return "NO";
+            } else {
+                map.put(ch, map.get(ch) - 1);   // 키값이 모두 0이면 아나그램이다.
+            }
         }
 
         return answer;
