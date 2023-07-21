@@ -9,7 +9,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("NO", main.solution("(()(()))(()"));
+        assertEquals("EFLM", main.solution("(A(BC)D)EF(G(H)(IJ)K)LM(N)"));
     }
 
     @Test
