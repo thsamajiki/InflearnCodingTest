@@ -1,26 +1,22 @@
 package section04;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    public char solution(int n, String s) {
-        char answer = ' ';
-        Map<Character, Integer> map = new HashMap<>();
+    public String solution(String s1, String s2) {
+        String answer = "";
 
-        for (char ch : s.toCharArray()) {
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
-        }
+        char[] chArr1 = s1.toCharArray();
+        Arrays.sort(chArr1);
 
-        int max = Integer.MIN_VALUE;
-        for (char key : map.keySet()) {
-            if (map.get(key) > max) {
-                max = map.get(key);
-                answer = key;
-            }
+        char[] chArr2 = s2.toCharArray();
+        Arrays.sort(chArr2);
+
+        if (Arrays.equals(chArr1, chArr2)) {
+            answer = "YES";
+        } else {
+            answer = "NO";
         }
 
         return answer;
@@ -29,9 +25,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        String s = br.readLine();
+        String s1 = br.readLine();
+        String s2 = br.readLine();
 
-        System.out.println(main.solution(n, s));
+        System.out.println(main.solution(s1, s2));
     }
 }
