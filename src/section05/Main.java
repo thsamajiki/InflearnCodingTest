@@ -7,20 +7,21 @@ public class Main {
     public int solution(int[][] board, int[] moves) {
         int answer = 0;
 
-        List<Integer> dollList = new ArrayList<>();
-        for (int i = 0; i < moves.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                if (board[j][moves[i] - 1] != 0) {
-                    dollList.add(board[j][moves[i] - 1]); // 바구니에 인형을 넣음
-                    board[j][moves[i] - 1] = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int move : moves) {
+            for (int i = 0; i < board.length; i++) {
+                if (board[i][move - 1] != 0) {
+                    int temp = board[i][move - 1];
+                    board[i][move - 1] = 0;
+
+                    if (!stack.isEmpty() && temp == stack.peek()) {
+                        answer += 2;
+                        stack.pop();
+                    } else {
+                        stack.push(temp);
+                    }
                     break;
                 }
-            }
-
-            if (dollList.size() >= 2 && dollList.get(dollList.size() - 2) == dollList.get(dollList.size() - 1)) {
-                dollList.remove(dollList.get(dollList.size() - 1));
-                dollList.remove(dollList.get(dollList.size() - 1));
-                answer += 2;
             }
         }
 
