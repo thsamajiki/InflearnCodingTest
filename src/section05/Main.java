@@ -4,26 +4,35 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public int solution(int[][] board, int[] moves) {
+    public int solution(String str) {
         int answer = 0;
 
-        Stack<Integer> stack = new Stack<>();
-        for (int move : moves) {
-            for (int i = 0; i < board.length; i++) {
-                if (board[i][move - 1] != 0) {
-                    int temp = board[i][move - 1];
-                    board[i][move - 1] = 0;
+        // 후위표기식
+        // 왼쪽에서 부터 순차적으로 읽기 시작한다.
+        // 피연산자(숫자)는 일단 지나치고, 연산자(+-*/)가 나오게 되면, 연산자 앞쪽 두 개의 숫자로 연산을 진행한다.
 
-                    if (!stack.isEmpty() && temp == stack.peek()) {
-                        answer += 2;
-                        stack.pop();
-                    } else {
-                        stack.push(temp);
-                    }
-                    break;
+        Stack<Integer> stack = new Stack<>();
+
+        for (char x : str.toCharArray()) {
+            if (Character.isDigit(x)) {
+                stack.push(x - 48);
+            } else {
+                int right = stack.pop();
+                int left = stack.pop();
+
+                if (x == '+') {
+                    stack.push(left + right);
+                } else if (x == '-') {
+                    stack.push(left - right);
+                } else if (x == '*') {
+                    stack.push(left * right);
+                } else if (x == '/') {
+                    stack.push(left / right);
                 }
             }
         }
+
+        answer = stack.get(0);
 
         return answer;
     }
@@ -31,22 +40,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int[][] board = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
-                board[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
+        String str = br.readLine();
 
-        int m = Integer.parseInt(br.readLine());
-        int[] moves = new int[m];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < m; i++) {
-            moves[i] = Integer.parseInt(st.nextToken());
-        }
-
-        System.out.println(main.solution(board, moves));
+        System.out.println(main.solution(str));
     }
 }
