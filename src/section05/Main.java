@@ -5,21 +5,23 @@ import java.io.*;
 
 public class Main {
     public int solution(int n, int k) {
-        List<Integer> princeList = new ArrayList<>();
+        int answer = 0;
+        Queue<Integer> q = new LinkedList<>();
+
         for (int i = 1; i <= n; i++) {
-            princeList.add(i);
+            q.offer(i);
         }
 
-        while(princeList.size() != 1) {
-            for (int j = 0; j < k - 1; j++) {
-                princeList.add(princeList.get(0));
-                princeList.remove(0);
+        while (!q.isEmpty()) {
+            for (int i = 1; i < k; i++) {
+                q.offer(q.poll());
             }
+            q.poll();
 
-            princeList.remove(0);
+            if (q.size() == 1) {
+                answer = q.poll();
+            }
         }
-
-        int answer = princeList.get(0);
 
         return answer;
     }
