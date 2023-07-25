@@ -4,23 +4,24 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public int solution(int n, int k) {
-        int answer = 0;
-        Queue<Integer> q = new LinkedList<>();
+    public String solution(String need, String plan) {
+        String answer = "YES";
+        Queue<Character> q = new LinkedList<>();
 
-        for (int i = 1; i <= n; i++) {
-            q.offer(i);
+        for (char x : need.toCharArray()) {
+            q.offer(x);
         }
 
-        while (!q.isEmpty()) {
-            for (int i = 1; i < k; i++) {
-                q.offer(q.poll());
+        for (char x : plan.toCharArray()) {
+            if (q.contains(x)) {
+                if (x != q.poll()) { // 필수 과목을 순서대로 이수하지 않음
+                    return "NO";
+                }
             }
-            q.poll();
+        }
 
-            if (q.size() == 1) {
-                answer = q.poll();
-            }
+        if (!q.isEmpty()) { // 필수 과목을 이수하지 않음
+            return "NO";
         }
 
         return answer;
@@ -29,10 +30,10 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
 
-        System.out.println(main.solution(n, k));
+        String need = br.readLine();
+        String plan = br.readLine();
+
+        System.out.println(main.solution(need, plan));
     }
 }
