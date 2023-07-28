@@ -1,0 +1,16 @@
+package section07;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MainTest {
+
+    @Test
+    void solution() {
+    }
+
+    @Test
+    void main() {
+    }
+}
