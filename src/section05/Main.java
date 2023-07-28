@@ -3,25 +3,41 @@ package section05;
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    public String solution(String need, String plan) {
-        String answer = "YES";
-        Queue<Character> q = new LinkedList<>();
+class Person {
+    int id;
+    int priority; // 위험도
 
-        for (char x : need.toCharArray()) {
-            q.offer(x);
+    public Person(int id, int priority) {
+        this.id = id;
+        this.priority = priority;
+    }
+}
+
+public class Main {
+    public int solution(int n, int m, int[] arr) {
+        int answer = 0;
+        Queue<Person> q = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            q.offer(new Person(i, arr[i]));
         }
 
-        for (char x : plan.toCharArray()) {
-            if (q.contains(x)) {
-                if (x != q.poll()) { // 필수 과목을 순서대로 이수하지 않음
-                    return "NO";
+        while (!q.isEmpty()) {
+            Person temp = q.poll();
+            for (Person person : q) {
+                if (person.priority > temp.priority) {
+                    q.offer(temp);
+                    temp = null;
+                    break;
                 }
             }
-        }
+            if (temp != null) {
+                answer++;
 
-        if (!q.isEmpty()) { // 필수 과목을 이수하지 않음
-            return "NO";
+                if (temp.id == m) {
+                    return answer;
+                }
+            }
         }
 
         return answer;
@@ -31,9 +47,17 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String need = br.readLine();
-        String plan = br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-        System.out.println(main.solution(need, plan));
+        int[] arr = new int[n];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        System.out.println(main.solution(n, m, arr));
     }
 }
