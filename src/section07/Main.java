@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public void DFS(int n) {
+    private static int answer = 1;
+    public void solution(int n) {
         if (n == 0) {
             return;
         } else {
-            DFS(n / 2);
-            System.out.print(n % 2 + "");
+            solution(n - 1);
+            answer *= n;
         }
     }
 
@@ -20,6 +21,7 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        main.DFS(n);
+        main.solution(n);
+        System.out.println(answer);
     }
 }
