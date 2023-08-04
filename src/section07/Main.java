@@ -6,10 +6,10 @@ import java.io.InputStreamReader;
 
 public class Main {
     public int DFS(int n) {
-        if (n == 1) {
+        if (n == 1 || n == 2) {
             return 1;
         } else {
-            return n * DFS(n - 1);
+            return DFS(n - 2) + DFS(n - 1);
         }
     }
 
@@ -19,6 +19,8 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        System.out.println(main.DFS(n));
+        for (int i = 1; i <= n; i++) {
+            System.out.print(main.DFS(i) + " ");
+        }
     }
 }
