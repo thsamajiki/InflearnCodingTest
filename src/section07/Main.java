@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 
 public class Main {
     static int[] fibo;
+
     public int DFS(int n) {
+        if (fibo[n] > 0) {
+            return fibo[n];
+        }
+
         if (n == 1 || n == 2) {
             return fibo[n] = 1;
         } else {
