@@ -4,33 +4,41 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+class Node {
+    int data;
+    Node left, right;
+
+    public Node(int value) {
+        data = value; // 노드 값
+        left = right = null; // 왼쪽/오른쪽 자식 노드의 번짓수
+    }
+}
+
 public class Main {
-    static int[] fibo;
+    Node root;
 
-    public int DFS(int n) {
-        if (fibo[n] > 0) {
-            return fibo[n];
-        }
-
-        if (n == 1 || n == 2) {
-            return fibo[n] = 1;
+    public void DFS(Node root) {
+        if (root == null) { // root가 말단 노드에 있으면 종료
+            return;
         } else {
-            return fibo[n] = DFS(n - 2) + DFS(n - 1);
+            System.out.print(root.data + " ");
+            DFS(root.left);
+            DFS(root.right);
         }
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Main tree = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left = new Node(6);
+        tree.root.right.right = new Node(7);
 
-        fibo = new int[n + 1]; // 인덱스 0은 필요 없음. 각 인덱스는 숫자에 대응, 인덱스에 대한 값은 피보나치 값에 대응
-
-        main.DFS(n);
-
-        for (int i = 1; i <= n; i++) {
-            System.out.print(fibo[i] + " ");
-        }
+        tree.DFS(tree.root);
     }
 }
