@@ -21,8 +21,8 @@ public class Main {
         if (root == null) { // root가 말단 노드에 있으면 종료
             return;
         } else {
-            System.out.print(root.data + " ");
             DFS(root.left);
+            System.out.print(root.data + " ");
             DFS(root.right);
         }
     }
