@@ -22,8 +22,8 @@ public class Main {
             return;
         } else {
             DFS(root.left);
-            System.out.print(root.data + " ");
             DFS(root.right);
+            System.out.print(root.data + " ");
         }
     }
 
