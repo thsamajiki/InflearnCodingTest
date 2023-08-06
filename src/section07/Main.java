@@ -1,36 +1,60 @@
 package section07;
 
+import java.util.*;
 import java.io.*;
 
+class Node {
+    int data;
+    Node left, right;
+
+    public Node(int value) {
+        data = value;
+        left = right = null;
+    }
+}
+
 public class Main {
-    static int n;
-    static int[] ch;
-    public void DFS(int L) {
-        if (L == n + 1) {
-            String temp = "";
-            for (int i = 1; i <= n; i++) {
-                if (ch[i] == 1) {
-                    temp += i + " ";
+    Node root;
+
+    public void BFS(Node root) {
+        Queue<Node> q = new LinkedList<>();
+        q.offer(root);
+
+        int level = 0;
+
+        while (!q.isEmpty()) {
+            int len = q.size();
+
+            System.out.print(level + " : ");
+            for (int i = 0; i < len; i++) {
+                Node currentNode = q.poll();
+                System.out.print(currentNode.data + " ");
+
+                if (currentNode.left != null) {
+                    q.offer(currentNode.left);
+                }
+                if (currentNode.right != null) {
+                    q.offer(currentNode.right);
                 }
             }
 
-            if (temp.length() > 0) {
-                System.out.println(temp);
-            }
-        } else {
-            ch[L] = 1;
-            DFS(L + 1);
-            ch[L] = 0;
-            DFS(L + 1);
+            level++;
+            System.out.println();
         }
     }
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        Main tree = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
-        ch = new int[n + 1];
-        main.DFS(1);
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left  = new Node(4);
+        tree.root.left.right = new Node(5);
+        tree.root.right.left  = new Node(6);
+        tree.root.right.right = new Node(7);
+
+        tree.BFS(tree.root);
     }
 }
