@@ -8,6 +8,8 @@ class MainTest {
 
     @Test
     void solution() {
+        Main main = new Main();
+        assertEquals(3, main.BFS(5, 14));
     }
 
     @Test
