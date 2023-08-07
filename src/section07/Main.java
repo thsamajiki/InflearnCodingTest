@@ -3,58 +3,50 @@ package section07;
 import java.util.*;
 import java.io.*;
 
-class Node {
-    int data;
-    Node left, right;
-
-    public Node(int value) {
-        data = value;
-        left = right = null;
-    }
-}
-
 public class Main {
-    Node root;
+    int[] dis = { 1, -1, 5 };
+    int[] ch;
+    Queue<Integer> q = new LinkedList<>();
 
-    public void BFS(Node root) {
-        Queue<Node> q = new LinkedList<>();
-        q.offer(root);
+    public int BFS(int s, int e) {
+        ch = new int[10001];
+        ch[s] = 1; // 출발 지점 체크
+        q.offer(s);
 
-        int level = 0;
+        int L = 0; // 레벨
 
         while (!q.isEmpty()) {
             int len = q.size();
 
-            System.out.print(level + " : ");
             for (int i = 0; i < len; i++) {
-                Node currentNode = q.poll();
-                System.out.print(currentNode.data + " ");
+                int x = q.poll();
 
-                if (currentNode.left != null) {
-                    q.offer(currentNode.left);
-                }
-                if (currentNode.right != null) {
-                    q.offer(currentNode.right);
+                for (int j = 0; j < 3; j++) {
+                    int nx = x + dis[j];
+                    if (nx == e) {
+                        return L + 1;
+                    }
+
+                    if (nx >= 1 && nx <= 10000 && ch[nx] == 0) {
+                        ch[nx] = 1;
+                        q.offer(nx);
+                    }
                 }
             }
 
-            level++;
-            System.out.println();
+            L++;
         }
+
+        return 0;
     }
 
     public static void main(String[] args) throws IOException {
         Main tree = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int s = Integer.parseInt(st.nextToken());
+        int e = Integer.parseInt(st.nextToken());
 
-        tree.root = new Node(1);
-        tree.root.left = new Node(2);
-        tree.root.right = new Node(3);
-        tree.root.left.left  = new Node(4);
-        tree.root.left.right = new Node(5);
-        tree.root.right.left  = new Node(6);
-        tree.root.right.right = new Node(7);
-
-        tree.BFS(tree.root);
+        System.out.println(tree.BFS(s, e));
     }
 }
