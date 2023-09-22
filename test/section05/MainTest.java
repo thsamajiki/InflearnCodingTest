@@ -9,7 +9,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("YES", main.solution("CBA", "CBDAGE"));
-        assertEquals("NO", main.solution("CBA", "CGEADB"));
+        assertEquals(3, main.solution(5, 2, new int[] { 60, 50, 70, 80, 90 }));
+        assertEquals(4, main.solution(6, 3, new int[] { 70, 60, 90, 60, 60, 60 }));
     }
 }
