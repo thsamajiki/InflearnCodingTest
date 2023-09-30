@@ -4,19 +4,24 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n, m, answer = 0;
+    static int n, m;
     static List<List<Integer>> graph;
-    static int[] ch;
+    static int[] ch, dis;
 
-    public void DFS(int v) {
-        if (v == n) {
-            answer++;
-        } else {
-            for (int nextV : graph.get(v)) {
+    public void BFS(int v) {
+        Queue<Integer> q = new LinkedList<>();
+        ch[v] = 1;
+        dis[v] = 0;
+        q.offer(v);
+
+        while (!q.isEmpty()) {
+            int nowV = q.poll();
+
+            for (int nextV : graph.get(nowV)) {
                 if (ch[nextV] == 0) {
                     ch[nextV] = 1;
-                    DFS(nextV);
-                    ch[nextV] = 0;
+                    q.offer(nextV);
+                    dis[nextV] = dis[nowV] + 1;
                 }
             }
         }
@@ -35,6 +40,7 @@ public class Main {
         }
 
         ch = new int[n + 1];
+        dis = new int[n + 1];
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
@@ -43,9 +49,10 @@ public class Main {
             graph.get(a).add(b);
         }
 
-        ch[1] = 1;
-        tree.DFS(1);
+        tree.BFS(1);
 
-        System.out.println(answer);
+        for (int i = 2; i <= n; i++) {
+            System.out.println(i + " : " + dis[i]);
+        }
     }
 }
