@@ -4,49 +4,44 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    int[] dis = { 1, -1, 5 };
-    int[] ch;
-    Queue<Integer> q = new LinkedList<>();
+    static int n, m, answer = 0;
+    static int[][] graph;
+    static int[] ch;
 
-    public int BFS(int s, int e) {
-        ch = new int[10001];
-        ch[s] = 1; // 출발 지점 체크
-        q.offer(s);
-
-        int L = 0; // 레벨
-
-        while (!q.isEmpty()) {
-            int len = q.size();
-
-            for (int i = 0; i < len; i++) {
-                int x = q.poll();
-
-                for (int j = 0; j < 3; j++) {
-                    int nx = x + dis[j];
-                    if (nx == e) {
-                        return L + 1;
-                    }
-
-                    if (nx >= 1 && nx <= 10000 && ch[nx] == 0) {
-                        ch[nx] = 1;
-                        q.offer(nx);
-                    }
+    public void DFS(int v) {
+        if (v == n) {
+            answer++;
+        } else {
+            for (int i = 1; i <= n; i++) {
+                if (graph[v][i] == 1 & ch[i] == 0) {
+                    ch[i] = 1;
+                    DFS(i);
+                    ch[i] = 0;
                 }
             }
-
-            L++;
         }
-
-        return 0;
     }
 
     public static void main(String[] args) throws IOException {
         Main tree = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int s = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        System.out.println(tree.BFS(s, e));
+        graph = new int[n + 1][m + 1];
+        ch = new int[n + 1];
+
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            graph[a][b] = 1;
+        }
+
+        ch[1] = 1;
+        tree.DFS(1);
+
+        System.out.println(answer);
     }
 }
