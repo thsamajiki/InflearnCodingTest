@@ -5,18 +5,18 @@ import java.io.*;
 
 public class Main {
     static int n, m, answer = 0;
-    static int[][] graph;
+    static List<List<Integer>> graph;
     static int[] ch;
 
     public void DFS(int v) {
         if (v == n) {
             answer++;
         } else {
-            for (int i = 1; i <= n; i++) {
-                if (graph[v][i] == 1 & ch[i] == 0) {
-                    ch[i] = 1;
-                    DFS(i);
-                    ch[i] = 0;
+            for (int nextV : graph.get(v)) {
+                if (ch[nextV] == 0) {
+                    ch[nextV] = 1;
+                    DFS(nextV);
+                    ch[nextV] = 0;
                 }
             }
         }
@@ -29,14 +29,18 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        graph = new int[n + 1][m + 1];
+        graph = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>()); // 이게 중요함
+        }
+
         ch = new int[n + 1];
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            graph[a][b] = 1;
+            graph.get(a).add(b);
         }
 
         ch[1] = 1;
