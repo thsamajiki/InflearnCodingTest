@@ -5,27 +5,25 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.StringTokenizer;
 
 public class Main {
-    public int solution(int n, int k) {
-        int answer = 0;
-        Queue<Integer> q = new LinkedList<>();
+    public String solution(String need, String plan) {
+        String answer = "YES";
+        Queue<Character> q = new LinkedList<>();
 
-        for (int i = 1; i <= n; i++) {
-            q.offer(i);
+        for (char x : need.toCharArray()) {
+            q.offer(x);
         }
 
-        while (!q.isEmpty()) {
-            for (int i = 1; i < k; i++) {
-                q.offer(q.poll());
-            }
-            q.poll();
-
-            if (q.size() == 1) {
-                answer = q.poll();
+        for (char y : plan.toCharArray()) {
+            if (q.contains(y)) {
+                if (y != q.poll()) {
+                    return "NO";
+                }
             }
         }
+
+        if (!q.isEmpty()) return "NO";
 
         return answer;
     }
@@ -34,10 +32,9 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
+        String n = br.readLine();
+        String p = br.readLine();
 
-        System.out.println(main.solution(n, k));
+        System.out.println(main.solution(n, p));
     }
 }
