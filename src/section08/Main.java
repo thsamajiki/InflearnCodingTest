@@ -10,25 +10,26 @@ public class Main {
 
     public void DFS(int L, int sum, int[] arr) {
         if (flag) {
-            System.out.print("L : " + L + " / ");
-            System.out.println(i + "번째 sum : " + sum + " out! (경우 1)");
+            System.out.print("      (경우 1) " + "L : " + L + " / ");
+            System.out.println(i + "번째 sum : " + sum + " out!");
             return;
         }
         if (sum > total / 2) {
-            System.out.print(i + "번째 L : " + L + " / ");
-            System.out.println(i + "번째 sum : " + sum + " out! (경우 2)");
+            System.out.print("      (경우 2) " + i + "번째 L : " + L + " / ");
+            System.out.println(i + "번째 sum : " + sum + " out!");
             return;
         }
         if (L == n) {
             if (total - sum == sum) {
+                System.out.println(i + "번째 YES ");
                 answer = "YES";
                 flag = true;
             }
         } else {
-            System.out.println(i + "번째 왼쪽 묶기 / L : " + L + " sum : " + sum);
+            System.out.println(i + "번째 왼쪽 (묶기) -> L : " + L + " sum : " + sum);
             i++;
             DFS(L + 1, sum + arr[L], arr);
-            System.out.println(i + "번째 오른쪽 묶지 않기 / L : " + L + " sum : " + sum);
+            System.out.println(i + "번째 오른쪽 (묶지 않기) -> L : " + L + " sum : " + sum);
             i++;
             DFS(L + 1, sum, arr);
         }
