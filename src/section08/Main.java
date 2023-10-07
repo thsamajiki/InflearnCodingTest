@@ -4,53 +4,45 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static String answer = "NO";
-    static int i, n, total = 0;
-    boolean flag = false;
+    static int n, m, answer = 0;
+    static int[] ch;
+    static int[][] graph;
 
-    public void DFS(int L, int sum, int[] arr) {
-        if (flag) {
-            System.out.print("      (경우 1) " + "L : " + L + " / ");
-            System.out.println(i + "번째 sum : " + sum + " out!");
-            return;
-        }
-        if (sum > total / 2) {
-            System.out.print("      (경우 2) " + i + "번째 L : " + L + " / ");
-            System.out.println(i + "번째 sum : " + sum + " out!");
-            return;
-        }
-        if (L == n) {
-            if (total - sum == sum) {
-                System.out.println(i + "번째 YES ");
-                answer = "YES";
-                flag = true;
-            }
+    public void DFS(int v) {
+        if (v == n) {
+            answer++;
         } else {
-            System.out.println(i + "번째 왼쪽 (묶기) -> L : " + L + " sum : " + sum);
-            i++;
-            DFS(L + 1, sum + arr[L], arr);
-            System.out.println(i + "번째 오른쪽 (묶지 않기) -> L : " + L + " sum : " + sum);
-            i++;
-            DFS(L + 1, sum, arr);
+            for (int i = 1; i <= n; i++) {
+                if (graph[v][i] == 1 && ch[i] == 0) {
+                    ch[i] = 1;
+                    DFS(i);
+                    ch[i] = 0;
+                }
+            }
         }
     }
-
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
-
-        int[] arr = new int[n];
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-            total += arr[i];
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+
+        graph = new int[n + 1][n + 1];
+        ch = new int[n + 1];
+
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
+            graph[from][to] = 1;
         }
 
-        main.DFS(0, 0, arr);
+        ch[1] = 1;
+        main.DFS(1);
+
         System.out.println(answer);
     }
 }
