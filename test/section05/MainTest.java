@@ -9,7 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(17, main.solution("()(((()())(())()))(())"));
-        assertEquals(24, main.solution("(((()(()()))(())()))(()())"));
+        assertEquals(7, main.solution(8, 3));
     }
 }
