@@ -8,28 +8,20 @@ import java.util.Stack;
 public class Main {
     public int solution(String str) {
         int answer = 0;
-        Stack<Integer> stack = new Stack<>();
+        Stack<Character> stack = new Stack<>();
 
-        for (char x : str.toCharArray()) {
-            if (Character.isDigit(x)) {
-                stack.push(x - 48);
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '(') {
+                stack.push('(');
             } else {
-                int first = stack.pop();
-                int second = stack.pop();
-
-                if (x == '+') {
-                    stack.push(second + first);
-                } else if (x == '-') {
-                    stack.push(second - first);
-                } else if (x == '*') {
-                    stack.push(second * first);
-                } else if (x == '/') {
-                    stack.push(second / first);
+                stack.pop();
+                if (str.charAt(i - 1) == '(') {
+                    answer += stack.size();
+                } else {
+                    answer++;
                 }
             }
         }
-
-        answer = stack.get(0);
 
         return answer;
     }
