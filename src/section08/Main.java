@@ -4,21 +4,18 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n, m, answer = 0;
+    static int C, N, answer = 0;
     static int[] ch;
-    static int[][] graph;
 
-    public void DFS(int v) {
-        if (v == n) {
-            answer++;
+    public void DFS(int L, int sum, int[] weights) {
+        if (sum > C) {
+            return;
+        }
+        if (L == N) {
+            answer = Math.max(answer, sum);
         } else {
-            for (int i = 1; i <= n; i++) {
-                if (graph[v][i] == 1 && ch[i] == 0) {
-                    ch[i] = 1;
-                    DFS(i);
-                    ch[i] = 0;
-                }
-            }
+            DFS(L + 1, sum + weights[L], weights);
+            DFS(L + 1, sum, weights);
         }
     }
 
@@ -27,21 +24,17 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
 
-        graph = new int[n + 1][n + 1];
-        ch = new int[n + 1];
+        int[] weights = new int[N];
+        ch = new int[N];
 
-        for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            graph[from][to] = 1;
+        for (int i = 0; i < N; i++) {
+            weights[i] = Integer.parseInt(br.readLine());;
         }
 
-        ch[1] = 1;
-        main.DFS(1);
+        main.DFS(0, 0, weights);
 
         System.out.println(answer);
     }
