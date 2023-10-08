@@ -4,19 +4,22 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int N, M, answer = 0;
-    boolean flag = false;
+    static int N, M;
+    static int[] pm;
 
-    private void DFS(int L, int sum, int time, int[] ps, int[] pt) {
-        if (time > M) {
-            return;
-        }
-        if (L == N) {
-            answer = Math.max(answer, sum);
+    public void DFS(int L) {
+        if (L == M) {
+            for (int x : pm) {
+                System.out.print(x + " ");
+            }
+            System.out.println();
         } else {
-            DFS(L + 1, sum + ps[L], time + pt[L], ps, pt);
-            DFS(L + 1, sum, time, ps, pt);
+            for (int i = 1; i <= N; i++) {
+                pm[L] = i;
+                DFS(L + 1);
+            }
         }
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -27,17 +30,8 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
 
-        int[] a = new int[N];
-        int[] b = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            a[i] = Integer.parseInt(st.nextToken());
-            b[i] = Integer.parseInt(st.nextToken());
-        }
-
-        main.DFS(0, 0, 0, a, b);
-
-        System.out.println(answer);
+        pm = new int[M];
+        
+        main.DFS(0);
     }
 }
