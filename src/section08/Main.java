@@ -4,18 +4,18 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int C, N, answer = 0;
+    static int N, M, answer = 0;
     static int[] ch;
 
-    public void DFS(int L, int sum, int[] weights) {
-        if (sum > C) {
+    private void DFS(int L, int sum, int time, int[] ps, int[] pt) {
+        if (time > M) {
             return;
         }
         if (L == N) {
             answer = Math.max(answer, sum);
         } else {
-            DFS(L + 1, sum + weights[L], weights);
-            DFS(L + 1, sum, weights);
+            DFS(L + 1, sum + ps[L], time + pt[L], ps, pt);
+            DFS(L + 1, sum, time, ps, pt);
         }
     }
 
@@ -24,17 +24,19 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        C = Integer.parseInt(st.nextToken());
         N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        int[] weights = new int[N];
-        ch = new int[N];
+        int[] a = new int[N];
+        int[] b = new int[N];
 
         for (int i = 0; i < N; i++) {
-            weights[i] = Integer.parseInt(br.readLine());;
+            st = new StringTokenizer(br.readLine());
+            a[i] = Integer.parseInt(st.nextToken());
+            b[i] = Integer.parseInt(st.nextToken());
         }
 
-        main.DFS(0, 0, weights);
+        main.DFS(0, 0, 0, a, b);
 
         System.out.println(answer);
     }
