@@ -9,6 +9,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(12, main.solution("352+*9-"));
+        assertEquals(17, main.solution("()(((()())(())()))(())"));
+        assertEquals(24, main.solution("(((()(()()))(())()))(()())"));
     }
 }
