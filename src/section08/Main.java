@@ -5,7 +5,6 @@ import java.io.*;
 
 public class Main {
     static int N, M, answer = 0;
-    static int[] ch;
 
     private void DFS(int L, int sum, int time, int[] ps, int[] pt) {
         if (time > M) {
