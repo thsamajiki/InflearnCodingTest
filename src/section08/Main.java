@@ -5,22 +5,25 @@ import java.io.*;
 
 public class Main {
     static int[][] graph;
+    static int[][] dist;
     static int[] dx = { -1, 0, 1, 0 };
     static int[] dy = { 0, 1, 0, -1 };
-    static int[][] ch;
-    static int answer;
 
-    public void DFS(int x, int y) {
-        if (x == 7 && y == 7) {
-            answer++;
-        } else {
+    public void BFS(int x, int y) {
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[] { x, y });
+
+        while (!q.isEmpty()) {
+            int[] now = q.poll();
+
             for (int i = 0; i < 4; i++) {
-                int nextX = x + dx[i];
-                int nextY = y + dy[i];
-                if (nextX >= 1 && nextX <= 7 && nextY >= 1 && nextY <= 7 && ch[nextX][nextY] == 0 && graph[nextX][nextY] == 0) {
-                    ch[nextX][nextY] = 1;
-                    DFS(nextX, nextY);
-                    ch[nextX][nextY] = 0;
+                int nextX = now[0] + dx[i];
+                int nextY = now[1] + dy[i];
+
+                if (nextX >= 0 && nextX < 7 && nextY >= 0 && nextY < 7 && graph[nextX][nextY] == 0) {
+                    graph[nextX][nextY] = 1;
+                    q.offer(new int[] { nextX, nextY });
+                    dist[nextX][nextY] = dist[now[0]][now[1]] + 1;
                 }
             }
         }
@@ -30,19 +33,21 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        graph = new int[8][8];
-        ch = new int[8][8];
+        graph = new int[7][7];
+        dist = new int[7][7];
 
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 0; i < 7; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 1; j <= 7; j++) {
+            for (int j = 0; j < 7; j++) {
                 graph[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
-        ch[1][1] = 1;
-        main.DFS(1, 1);
-
-        System.out.println(answer);
+        main.BFS(0, 0);
+        if (dist[6][6] == 0) {
+            System.out.println(-1);
+        } else {
+            System.out.println(dist[6][6]);
+        }
     }
 }
