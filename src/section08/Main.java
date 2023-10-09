@@ -4,19 +4,24 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n, m;
-    static int[] combi;
+    static int[][] graph;
+    static int[] dx = { -1, 0, 1, 0 };
+    static int[] dy = { 0, 1, 0, -1 };
+    static int[][] ch;
+    static int answer;
 
-    public void DFS(int L, int s) {
-        if (L == m) {
-            for (int x : combi) {
-                System.out.print(x + " ");
-            }
-            System.out.println();
+    public void DFS(int x, int y) {
+        if (x == 6 && y == 6) {
+            answer++;
         } else {
-            for (int i = s; i <= n; i++) {
-                combi[L] = i;
-                DFS(L + 1, i + 1);
+            for (int i = 0; i < 4; i++) {
+                int nextX = x + dx[i];
+                int nextY = y + dy[i];
+                if (nextX >= 0 && nextX < 7 && nextY >= 0 && nextY < 7 && ch[nextX][nextY] == 0 && graph[nextX][nextY] == 0) {
+                    ch[nextX][nextY] = 1;
+                    DFS(nextX, nextY);
+                    ch[nextX][nextY] = 0;
+                }
             }
         }
     }
@@ -25,12 +30,19 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
+        graph = new int[7][7];
+        ch = new int[7][7];
 
-        combi = new int[m];
+        for (int i = 0; i < 7; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < 7; j++) {
+                graph[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
 
-        main.DFS(0, 1);
+        ch[0][0] = 1;
+        main.DFS(0, 0);
+
+        System.out.println(answer);
     }
 }
