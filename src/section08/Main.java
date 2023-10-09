@@ -4,26 +4,27 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int[][] graph;
+    static int n, m;
+    static int[][] board;
     static int[][] dist;
     static int[] dx = { -1, 0, 1, 0 };
     static int[] dy = { 0, 1, 0, -1 };
+    static Queue<int[]> q = new LinkedList<>();
 
-    public void BFS(int x, int y) {
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[] { x, y });
-
+    public void BFS() {
         while (!q.isEmpty()) {
             int[] now = q.poll();
+            int nowX = now[0];
+            int nowY = now[1];
 
             for (int i = 0; i < 4; i++) {
-                int nextX = now[0] + dx[i];
-                int nextY = now[1] + dy[i];
+                int nextX = nowX + dx[i];
+                int nextY = nowY + dy[i];
 
-                if (nextX >= 0 && nextX < 7 && nextY >= 0 && nextY < 7 && graph[nextX][nextY] == 0) {
-                    graph[nextX][nextY] = 1;
+                if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < m && board[nextX][nextY] == 0) {
+                    board[nextX][nextY] = 1;
                     q.offer(new int[] { nextX, nextY });
-                    dist[nextX][nextY] = dist[now[0]][now[1]] + 1;
+                    dist[nextX][nextY] = dist[nowX][nowY] + 1;
                 }
             }
         }
@@ -33,21 +34,64 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        graph = new int[7][7];
-        dist = new int[7][7];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        m = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < 7; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < 7; j++) {
-                graph[i][j] = Integer.parseInt(st.nextToken());
+        board = new int[n][m];
+        dist = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < m; j++) {
+                board[i][j] = Integer.parseInt(st.nextToken());
+                if (board[i][j] == 1) {
+                    q.offer(new int[] { i, j });
+                }
             }
         }
 
-        main.BFS(0, 0);
-        if (dist[6][6] == 0) {
-            System.out.println(-1);
+        boolean isAllRipen = true;
+
+        outer:
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] != 1) {
+                    isAllRipen = false;
+                    break outer;
+                }
+            }
+        }
+
+        if (isAllRipen) {
+            System.out.println(0);
+            return;
+        }
+
+        main.BFS();
+
+        boolean flag = true;
+        int answer = Integer.MIN_VALUE;
+
+        outer:
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (board[i][j] == 0) {
+                    flag = false;
+                    break outer;
+                }
+            }
+        }
+
+        if (flag) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    answer = Math.max(answer, dist[i][j]);
+                }
+            }
+            System.out.println(answer);
         } else {
-            System.out.println(dist[6][6]);
+            System.out.println(-1);
         }
     }
 }
