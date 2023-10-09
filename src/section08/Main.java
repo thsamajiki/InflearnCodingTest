@@ -4,17 +4,20 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n, r;
-    int[][] dy = new int[35][35];
+    static int n, m;
+    static int[] combi;
 
-    public int DFS(int n, int r) {
-        if (dy[n][r] > 0) {
-            return dy[n][r];
-        }
-        if (n == r || r == 0) {
-            return 1;
+    public void DFS(int L, int s) {
+        if (L == m) {
+            for (int x : combi) {
+                System.out.print(x + " ");
+            }
+            System.out.println();
         } else {
-            return dy[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r);
+            for (int i = s; i <= n; i++) {
+                combi[L] = i;
+                DFS(L + 1, i + 1);
+            }
         }
     }
 
@@ -24,8 +27,10 @@ public class Main {
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
-        r = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        System.out.println(main.DFS(n, r));
+        combi = new int[m];
+
+        main.DFS(0, 1);
     }
 }
