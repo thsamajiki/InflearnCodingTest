@@ -4,26 +4,17 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int N, M;
-    static int[] arr;
-    static int[] ch;
-    static int[] pm;
+    static int n, r;
+    int[][] dy = new int[35][35];
 
-    public void DFS(int L) {
-        if (L == M) {
-            for (int i = 0; i < M; i++) {
-                System.out.print(pm[i] + " ");
-            }
-            System.out.println();
+    public int DFS(int n, int r) {
+        if (dy[n][r] > 0) {
+            return dy[n][r];
+        }
+        if (n == r || r == 0) {
+            return 1;
         } else {
-            for (int i = 0; i < N; i++) {
-                if (ch[i] == 0) {
-                    ch[i] = 1;
-                    pm[L] = arr[i];
-                    DFS(L + 1);
-                    ch[i] = 0;
-                }
-            }
+            return dy[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r);
         }
     }
 
@@ -32,19 +23,9 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
-        M = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
+        r = Integer.parseInt(st.nextToken());
 
-        arr = new int[N];
-
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-
-        ch = new int[N];
-        pm = new int[M];
-        
-        main.DFS(0);
+        System.out.println(main.DFS(n, r));
     }
 }
