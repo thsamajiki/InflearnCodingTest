@@ -9,6 +9,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-//        assertEquals(3, main.BFS(5, 14));
+        assertEquals(10, main.DFS(5, 3));
+        assertEquals(818809200, main.DFS(33, 19));
     }
 }
