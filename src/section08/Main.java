@@ -9,15 +9,21 @@ public class Main {
     static int answer;
     static int[] dx = { -1, -1, 0, 1, 1, 1, 0, -1 };
     static int[] dy = { 0, 1, 1, 1, 0, -1, -1, -1 };
+    static Queue<int[]> q = new LinkedList<>();
 
-    private void DFS(int x, int y) {
-        for (int i = 0; i < 8; i++) {
-            int nextX = x + dx[i];
-            int nextY = y + dy[i];
+    private void BFS(int x, int y) {
+        q.offer(new int[] { x, y });
 
-            if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && board[nextX][nextY] == 1) {
-                board[nextX][nextY] = 0;
-                DFS(nextX, nextY);
+        while (!q.isEmpty()) {
+            int[] now = q.poll();
+            for (int i = 0; i < 8; i++) {
+                int nextX = now[0] + dx[i];
+                int nextY = now[1] + dy[i];
+
+                if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && board[nextX][nextY] == 1) {
+                    board[nextX][nextY] = 0;
+                    q.add(new int[] { nextX, nextY });
+                }
             }
         }
     }
@@ -42,7 +48,7 @@ public class Main {
                 if (board[i][j] == 1) {
                     answer++;
                     board[i][j] = 0;
-                    main.DFS(i, j);
+                    main.BFS(i, j);
                 }
             }
         }
