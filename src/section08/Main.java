@@ -4,27 +4,38 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n;
-    static int[][] board;
+    static int s, e;
     static int answer;
-    static int[] dx = { -1, -1, 0, 1, 1, 1, 0, -1 };
-    static int[] dy = { 0, 1, 1, 1, 0, -1, -1, -1 };
-    static Queue<int[]> q = new LinkedList<>();
+    static int[] moves = { 1, -1, 5 };
+    static int[] ch;
 
-    private void BFS(int x, int y) {
-        q.offer(new int[] { x, y });
+    private void BFS(int s, int e) {
+        ch = new int[10001];
+        ch[s] = 1;
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(s);
 
         while (!q.isEmpty()) {
-            int[] now = q.poll();
-            for (int i = 0; i < 8; i++) {
-                int nextX = now[0] + dx[i];
-                int nextY = now[1] + dy[i];
+            int len = q.size();
 
-                if (nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && board[nextX][nextY] == 1) {
-                    board[nextX][nextY] = 0;
-                    q.add(new int[] { nextX, nextY });
+            for (int i = 0; i < len; i++) {
+                int now = q.poll();
+
+                for (int j = 0; j < moves.length; j++) {
+                    int next = now + moves[j];
+
+                    if (next == e) {
+                        answer++;
+                        return;
+                    }
+                    if (next >= 1 && next <= 10000 && ch[next] == 0) {
+                        ch[next] = 1;
+                        q.offer(next);
+                    }
                 }
+
             }
+            answer++;
         }
     }
 
@@ -32,26 +43,11 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        s = Integer.parseInt(st.nextToken());
+        e = Integer.parseInt(st.nextToken());
 
-        board = new int[n][n];
-
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
-                board[i][j] = Integer.parseInt(st.nextToken());
-            }
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] == 1) {
-                    answer++;
-                    board[i][j] = 0;
-                    main.BFS(i, j);
-                }
-            }
-        }
+        main.BFS(s, e);
 
         System.out.println(answer);
     }
