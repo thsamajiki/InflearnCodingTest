@@ -5,24 +5,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-
 public class Main {
     public String solution(String str) {
-        String answer = "NO";
+        String answer = "";
         Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            if (ch == '(') {
-                stack.push(ch);
+        for (char ch : str.toCharArray()) {
+            if (ch == ')') {
+                while (stack.pop() != '(');
             } else {
-                if (stack.isEmpty()) return "NO";
-                stack.pop();
+                stack.push(ch);
             }
         }
 
-        if (stack.isEmpty()) {
-            answer = "YES";
+        for (int i = 0; i < stack.size(); i++) {
+            answer += stack.get(i);
         }
 
         return answer;
