@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public int solution(String str, char c) {
-        int answer = 0;
+    public String solution(String str) {
+        StringBuilder sb = new StringBuilder();
 
-        str = str.toUpperCase();
-        c = Character.toUpperCase(c);
         for (char ch : str.toCharArray()) {
-            if (ch == c) answer++;
+            if (Character.isUpperCase(ch)) sb.append(Character.toLowerCase(ch));
+            else sb.append(Character.toUpperCase(ch));
         }
 
-        return answer;
+        return sb.toString();
     }
 
     public static void main(String[] args) throws IOException {
@@ -22,8 +21,7 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String str = br.readLine();
-        char c = br.readLine().charAt(0);
 
-        System.out.println(main.solution(str, c));
+        System.out.println(main.solution(str));
     }
 }
