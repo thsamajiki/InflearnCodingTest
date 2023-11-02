@@ -1,17 +1,17 @@
 package section01;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    public String solution(int n, String s) {
-        String answer = "";
+    public int solution(String str, char c) {
+        int answer = 0;
 
-        for (int i = 0; i < n; i++) {
-            String temp = s.substring(0, 7).replace('#', '1').replace('*', '0');
-            int num = Integer.parseInt(temp, 2); // 2진수를 10진수화
-            answer += (char)num;
-            s = s.substring(7);
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == Character.toUpperCase(c) || str.charAt(i) == Character.toLowerCase(c)) {
+                answer++;
+            }
         }
 
         return answer;
@@ -21,9 +21,9 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
-        String s = br.readLine();
+        String str = br.readLine();
+        char c = br.readLine().charAt(0);
 
-        System.out.println(main.solution(n, s));
+        System.out.println(main.solution(str, c));
     }
 }
