@@ -9,7 +9,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("sTUdy", main.solution("StuDY"));
+        assertEquals("study", main.solution("it is time to study"));
     }
 
     @Test
