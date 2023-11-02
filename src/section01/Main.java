@@ -6,14 +6,20 @@ import java.io.InputStreamReader;
 
 public class Main {
     public String solution(String str) {
-        StringBuilder sb = new StringBuilder();
+        String answer = "";
 
-        for (char ch : str.toCharArray()) {
-            if (Character.isUpperCase(ch)) sb.append(Character.toLowerCase(ch));
-            else sb.append(Character.toUpperCase(ch));
+        String[] words = str.split(" ");
+        int max = 0;
+
+        for (String word : words) {
+            int length = word.length();
+            if (max < length) {
+                max = length;
+                answer = word;
+            }
         }
 
-        return sb.toString();
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
