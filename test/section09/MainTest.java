@@ -12,6 +12,7 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(3, main.solution(new ArrayList<>(List.of(new Body(172, 67), new Body(183, 65), new Body(180, 70), new Body(170, 72), new Body(181, 60))), 5));
+        assertEquals(3, main.solution(new ArrayList<>(List.of(new Time(1, 4), new Time(2, 3), new Time(3, 5), new Time(4, 6), new Time(5, 7))), 5));
+        assertEquals(2, main.solution(new ArrayList<>(List.of(new Time(3, 3), new Time(1, 3), new Time(2, 3))), 3));
     }
 }
