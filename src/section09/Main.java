@@ -7,31 +7,36 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-class Body implements Comparable<Body> {
-    int height;
-    int weight;
+class Time implements Comparable<Time> {
+    int startTime;
+    int endTime;
 
-    public Body(int height, int weight) {
-        this.height = height;
-        this.weight = weight;
+    public Time(int startTime, int endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
-    public int compareTo(Body o) {
-        return o.height - this.height; // height를 기준으로 내림차순으로 정렬됨
+    public int compareTo(Time o) {
+        if (this.endTime == o.endTime) {
+            return this.startTime - o.startTime;
+        } else {
+            return this.endTime - o.endTime; // 회의가 빨리 끝나는 것부터 선택해야 최상의 결과가 나온다.
+        }
     }
 }
 
 public class Main {
-    public int solution(ArrayList<Body> list, int n) {
+    public int solution(ArrayList<Time> list, int n) {
         int count = 0;
+
         Collections.sort(list);
 
-        int max = 0;
+        int et = 0; // 첫번째 끝나는 시간을 0으로 초기화함
 
-        for (Body body : list) {
-            if (body.weight > max) {
-                max = body.weight;
+        for (Time time : list) {
+            if (time.startTime >= et) { // 회의가 진행된다면
+                et = time.endTime;
                 count++;
             }
         }
@@ -45,12 +50,13 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        ArrayList<Body> list = new ArrayList<>();
+        ArrayList<Time> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int h = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            list.add(new Body(h, w));
+            int firstTime = Integer.parseInt(st.nextToken());
+            int endTime = Integer.parseInt(st.nextToken());
+
+            list.add(new Time(firstTime, endTime));
         }
 
         System.out.println(main.solution(list, n));
