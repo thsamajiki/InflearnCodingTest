@@ -5,41 +5,41 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-class Time implements Comparable<Time> {
-    int time;
-    char state;
+class Lecture implements Comparable<Lecture> {
+    int money;
+    int day;
 
-    public Time(int time, char state) {
-        this.time = time;
-        this.state = state;
+    public Lecture(int money, int day) {
+        this.money = money;
+        this.day = day;
     }
 
-
     @Override
-    public int compareTo(Time o) {
-        if (this.time == o.time) return this.state - o.state; // 시간을 오름차순으로 정렬한 후에 가는 사람을 먼저 처리해야 한다.
-        else return this.time - o.time;
+    public int compareTo(Lecture o) {
+        return o.day - this.day;
     }
 }
 
 public class Main {
-    public int solution(ArrayList<Time> list) {
+    static int max = 0, n;
+
+    public int solution(ArrayList<Lecture> list) {
         int answer = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
 
         Collections.sort(list);
 
-        int count = 0;
-
-        for (Time time : list) {
-            if (time.state == 's') {
-                count++;
-            } else {
-                count--;
+        int j = 0;
+        for (int i = max; i >= 1; i--) {
+            for (; j < n; j++) {
+                if (list.get(j).day < i) break;
+                pq.offer(list.get(j).money);
             }
 
-            answer = Math.max(answer, count);
+            if (!pq.isEmpty()) answer += pq.poll();
         }
 
         return answer;
@@ -49,16 +49,16 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int n = Integer.parseInt(br.readLine());
+        n = Integer.parseInt(br.readLine());
 
-        ArrayList<Time> list = new ArrayList<>();
+        ArrayList<Lecture> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int startTime = Integer.parseInt(st.nextToken());
-            int endTime = Integer.parseInt(st.nextToken());
+            int money = Integer.parseInt(st.nextToken());
+            int day = Integer.parseInt(st.nextToken());
 
-            list.add(new Time(startTime, 's'));
-            list.add(new Time(endTime, 'e'));
+            list.add(new Lecture(money, day));
+            if (day > max) max = day;
         }
 
         System.out.println(main.solution(list));
