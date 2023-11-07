@@ -12,7 +12,11 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(3, main.solution(new ArrayList<>(List.of(new Time(1, 4), new Time(2, 3), new Time(3, 5), new Time(4, 6), new Time(5, 7))), 5));
-        assertEquals(2, main.solution(new ArrayList<>(List.of(new Time(3, 3), new Time(1, 3), new Time(2, 3))), 3));
+        assertEquals(2, main.solution(new ArrayList<>(List.of(
+                new Time(14, 's'), new Time(18, 'e'),
+                new Time(12, 's'), new Time(15, 'e'),
+                new Time(15, 's'), new Time(20, 'e'),
+                new Time(20, 's'), new Time(30, 'e'),
+                new Time(5, 's'), new Time(14, 'e')))));
     }
 }
