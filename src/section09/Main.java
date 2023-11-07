@@ -8,40 +8,41 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 class Time implements Comparable<Time> {
-    int startTime;
-    int endTime;
+    int time;
+    char state;
 
-    public Time(int startTime, int endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public Time(int time, char state) {
+        this.time = time;
+        this.state = state;
     }
+
 
     @Override
     public int compareTo(Time o) {
-        if (this.endTime == o.endTime) {
-            return this.startTime - o.startTime;
-        } else {
-            return this.endTime - o.endTime; // 회의가 빨리 끝나는 것부터 선택해야 최상의 결과가 나온다.
-        }
+        if (this.time == o.time) return this.state - o.state; // 시간을 오름차순으로 정렬한 후에 가는 사람을 먼저 처리해야 한다.
+        else return this.time - o.time;
     }
 }
 
 public class Main {
-    public int solution(ArrayList<Time> list, int n) {
-        int count = 0;
+    public int solution(ArrayList<Time> list) {
+        int answer = 0;
 
         Collections.sort(list);
 
-        int et = 0; // 첫번째 끝나는 시간을 0으로 초기화함
+        int count = 0;
 
         for (Time time : list) {
-            if (time.startTime >= et) { // 회의가 진행된다면
-                et = time.endTime;
+            if (time.state == 's') {
                 count++;
+            } else {
+                count--;
             }
+
+            answer = Math.max(answer, count);
         }
 
-        return count;
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
@@ -53,12 +54,13 @@ public class Main {
         ArrayList<Time> list = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int firstTime = Integer.parseInt(st.nextToken());
+            int startTime = Integer.parseInt(st.nextToken());
             int endTime = Integer.parseInt(st.nextToken());
 
-            list.add(new Time(firstTime, endTime));
+            list.add(new Time(startTime, 's'));
+            list.add(new Time(endTime, 'e'));
         }
 
-        System.out.println(main.solution(list, n));
+        System.out.println(main.solution(list));
     }
 }
