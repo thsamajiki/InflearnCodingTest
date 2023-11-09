@@ -4,38 +4,30 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
     public ArrayList<Integer> solution(int n, int m, int[] a, int[] b){
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> answer = new ArrayList<>();
         int p1 = 0, p2 = 0;
+
+        Arrays.sort(a);
+        Arrays.sort(b);
 
         while (p1 < n && p2 < m) {
             if (a[p1] < b[p2]) {
-                // list.add(a[p1++]);
-                list.add(a[p1]);
                 p1++;
+            } else if (a[p1] > b[p2]) {
+                p2++;
             } else {
-                // list.add(b[p2++]);
-                list.add(b[p2]);
+                answer.add(a[p1]);
+                p1++;
                 p2++;
             }
         }
 
-        while (p1 < n) {
-            // list.add(a[p1++]);
-            list.add(a[p1]);
-            p1++;
-        }
-
-        while (p2 < m) {
-            // list.add(b[p2++]);
-            list.add(b[p2]);
-            p2++;
-        }
-
-        return list;
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
