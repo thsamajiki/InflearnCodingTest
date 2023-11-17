@@ -3,24 +3,29 @@ package section03;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
-    public int solution(int n, int m, int[] arr){
+    public int solution(int n) {
         int answer = 0;
         int sum = 0;
-        int lt = 0;
+        int m = n / 2 + 1;
+        int p1 = 1;
 
-        for(int rt = 0; rt < n; rt++) {
-            sum += arr[rt];
-            if (sum == m) answer++;
-
-            while (sum >= m) {
-                sum -= arr[lt++];
-                if (sum == m) answer++;
-            }
+        int[] arr = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            arr[i] = i;
         }
 
+        for (int p2 = 1; p2 <= m; p2++) {
+            sum += arr[p2];
+            if (sum == n) answer++;
+
+            while (sum >= n) {
+                sum -= arr[p1++];
+                if (sum == n) answer++;
+            }
+        }
+        
         return answer;
     }
 
@@ -28,17 +33,8 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(br.readLine());
 
-        int[] arr = new int[N];
-
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-
-        System.out.println(main.solution(N, M, arr));
+        System.out.println(main.solution(N));
     }
 }
