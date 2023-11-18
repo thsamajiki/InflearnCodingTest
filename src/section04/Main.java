@@ -4,20 +4,24 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public String solution(String s1, String s2) {
-        String answer = "YES";
+    public ArrayList<Integer> solution(int n, int k, int[] arr) {
+        ArrayList<Integer> answer = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
 
-        Map<Character, Integer> map = new HashMap<>();
-
-        for (char ch : s1.toCharArray()) {
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        for (int i = 0; i < k - 1; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
         }
-        for (char ch : s2.toCharArray()) {
-            if (!map.containsKey(ch) || map.get(ch) == 0) { // 키값이 하나라도 0이 아니면 아나그램이 아니다.
-                return "NO";
-            } else {
-                map.put(ch, map.get(ch) - 1);   // 키값이 모두 0이면 아나그램이다.
-            }
+        
+        int left = 0;
+
+        for (int right = k - 1; right < n; right++) {
+            map.put(arr[right], map.getOrDefault(arr[right], 0) + 1);
+            answer.add(map.size());
+
+            map.put(arr[left], map.get(arr[left]) - 1);
+
+            if (map.get(arr[left]) == 0) map.remove(arr[left]);
+            left++;
         }
 
         return answer;
@@ -26,9 +30,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s1 = br.readLine();
-        String s2 = br.readLine();
 
-        System.out.println(main.solution(s1, s2));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for (int x : main.solution(N, K, arr)) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
     }
 }
