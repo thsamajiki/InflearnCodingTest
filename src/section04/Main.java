@@ -8,20 +8,38 @@ public class Main {
         ArrayList<Integer> answer = new ArrayList<>();
         Map<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < k - 1; i++) {
+        for (int i = 0; i < k; i++) {
             map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
         }
+        answer.add(map.size());
         
         int left = 0;
 
-        for (int right = k - 1; right < n; right++) {
+        System.out.println("초기");
+        System.out.println("map : " + map);
+        System.out.println("answer : " + answer);
+        System.out.println("========================\n");
+
+        for (int right = k; right < n; right++) {
+            System.out.println("right : " + right);
             map.put(arr[right], map.getOrDefault(arr[right], 0) + 1);
-            answer.add(map.size());
+            System.out.println("map - key : " + arr[right] + " / value : " + map.getOrDefault(arr[right], 0));
 
-            map.put(arr[left], map.get(arr[left]) - 1);
+            if (map.get(arr[left]) > 1) {
+                System.out.println("경우 1");
+                map.put(arr[left], map.get(arr[left]) - 1);
+            } else {
+                System.out.println("경우 2");
+                map.remove(arr[left]);
+            }
 
-            if (map.get(arr[left]) == 0) map.remove(arr[left]);
+            System.out.println("map : " + map);
+
             left++;
+            System.out.println("left : " + left);
+            answer.add(map.size());
+            System.out.println("answer : " + answer);
+            System.out.println("=======================\n");
         }
 
         return answer;
