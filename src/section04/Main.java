@@ -4,36 +4,41 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public int solution(String a, String b) {
-        int answer = 0;
-        HashMap<Character, Integer> am = new HashMap<>();
-        HashMap<Character, Integer> bm = new HashMap<>();
-        for (char x : b.toCharArray()) bm.put(x, bm.getOrDefault(x, 0) + 1);
+    public int solution(int[] arr, int n, int k) {
+        int answer = -1;
+        TreeSet<Integer> tSet = new TreeSet<>(Collections.reverseOrder());
 
-        int L = b.length() - 1;
-        for (int i = 0; i < L; i++) am.put(a.charAt(i), am.getOrDefault(a.charAt(i), 0) + 1);
-
-        int lt = 0;
-        for (int rt = L; rt < a.length(); rt++) {
-            am.put(a.charAt(rt), am.getOrDefault(a.charAt(rt), 0) + 1);
-
-            if (am.equals(bm)) answer++;
-
-            am.put(a.charAt(lt), am.get(a.charAt(lt)) - 1);
-            if (am.get(a.charAt(lt)) == 0) am.remove(a.charAt(lt));
-
-            lt++;
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                for (int l = j + 1; l < n; l++) {
+                    tSet.add(arr[i] + arr[j] + arr[l]);
+                }
+            }
         }
+
+        int count = 0;
+
+        for (int x : tSet) {
+            count++;
+            if (count == k) return x;
+        }
+
         return answer;
     }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
 
-        String a = br.readLine();
-        String b = br.readLine();
+        int[] arr = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
 
-        System.out.println(main.solution(a, b));
+        System.out.println(main.solution(arr, n, k));
     }
 }
