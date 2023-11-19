@@ -4,42 +4,49 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public ArrayList<Integer> solution(int n, int k, int[] arr) {
-        ArrayList<Integer> answer = new ArrayList<>();
-        Map<Integer, Integer> map = new HashMap<>();
+    public int solution(String a, String b) {
+        int answer = 0;
+        Map<Character, Integer> aMap = new HashMap<>();
+        Map<Character, Integer> bMap = new HashMap<>();
 
-        for (int i = 0; i < k; i++) {
-            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+        for (char x : b.toCharArray()) {
+            bMap.put(x, bMap.getOrDefault(x, 0) + 1);
         }
-        answer.add(map.size());
-        
-        int left = 0;
+        int lengthB = b.length();
 
+        for (int i = 0; i < lengthB; i++) {
+            aMap.put(a.charAt(i), aMap.getOrDefault(a.charAt(i), 0) + 1);
+        }
         System.out.println("초기");
-        System.out.println("map : " + map);
-        System.out.println("answer : " + answer);
-        System.out.println("========================\n");
+        System.out.println("aMap : " + aMap);
+        System.out.println("bMap : " + bMap);
+        System.out.println("================================");
 
-        for (int right = k; right < n; right++) {
+        if (aMap.equals(bMap)) answer++;
+
+        int lengthA = a.length();
+        int left = 0;
+        for (int right = lengthB; right < lengthA; right++) {
             System.out.println("right : " + right);
-            map.put(arr[right], map.getOrDefault(arr[right], 0) + 1);
-            System.out.println("map - key : " + arr[right] + " / value : " + map.getOrDefault(arr[right], 0));
+            aMap.put(a.charAt(right), aMap.getOrDefault(a.charAt(right), 0) + 1);
 
-            if (map.get(arr[left]) > 1) {
+            System.out.println("aMap : " + aMap);
+            System.out.println("aMap.get(a.charAt(left)) : " + aMap.get(a.charAt(left)));
+
+            if (aMap.get(a.charAt(left)) > 1) {
                 System.out.println("경우 1");
-                map.put(arr[left], map.get(arr[left]) - 1);
+                aMap.put(a.charAt(left), aMap.get(a.charAt(left)) - 1);
             } else {
                 System.out.println("경우 2");
-                map.remove(arr[left]);
+                aMap.remove(a.charAt(left));
             }
 
-            System.out.println("map : " + map);
-
             left++;
+            if (aMap.equals(bMap)) answer++;
             System.out.println("left : " + left);
-            answer.add(map.size());
+            System.out.println("bMap : " + bMap);
             System.out.println("answer : " + answer);
-            System.out.println("=======================\n");
+            System.out.println("================================\n");
         }
 
         return answer;
@@ -49,19 +56,9 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
+        String S = br.readLine();
+        String T = br.readLine();
 
-        int[] arr = new int[N];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-
-        for (int x : main.solution(N, K, arr)) {
-            System.out.print(x + " ");
-        }
-        System.out.println();
+        System.out.println(main.solution(S, T));
     }
 }
