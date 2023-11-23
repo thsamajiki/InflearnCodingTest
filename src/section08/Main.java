@@ -6,16 +6,14 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int c, n, answer;
-    public void solution(int L, int sum, int[] arr) {
-        if (sum > c) {
-            return;
-        }
+    static int n, m, answer;
+    public void solution(int L, int sum, int time, int[] ps, int[] pt) {
+        if (time > m) return;
         if (L == n) {
-            answer = Math.max(answer, sum);
+            answer = Math.max(sum, answer);
         } else {
-            solution(L + 1, sum + arr[L], arr);
-            solution(L + 1, sum, arr);
+            solution(L + 1, sum + ps[L], time + pt[L], ps, pt);
+            solution(L + 1, sum, time, ps, pt);
         }
     }
 
@@ -24,15 +22,19 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        c = Integer.parseInt(st.nextToken());
         n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        int[] arr = new int[n];
+        int[] ps = new int[n];
+        int[] pt = new int[n];
+
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+            st = new StringTokenizer(br.readLine());
+            ps[i] = Integer.parseInt(st.nextToken());
+            pt[i] = Integer.parseInt(st.nextToken());
         }
 
-        main.solution(0, 0, arr);
+        main.solution(0, 0, 0, ps, pt);
         System.out.println(answer);
     }
 }
