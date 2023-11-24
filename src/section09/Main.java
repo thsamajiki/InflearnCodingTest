@@ -4,63 +4,80 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-class Lecture implements Comparable<Lecture> {
-    int money;
-    int day;
+class Edge implements Comparable<Edge> {
+    int vex;
+    int cost;
 
-    public Lecture(int money, int day) {
-        this.money = money;
-        this.day = day;
+    public Edge(int vex, int cost) {
+        this.vex = vex;
+        this.cost = cost;
     }
 
     @Override
-    public int compareTo(Lecture o) {
-        return o.day - this.day;
+    public int compareTo(Edge o) {
+        return this.cost - o.cost;
     }
 }
 
 public class Main {
-    static int max = 0, n;
+    static int n, m;
+    static ArrayList<ArrayList<Edge>> graph;
+    static int[] dis;
 
-    public int solution(ArrayList<Lecture> list) {
-        int answer = 0;
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+    public void solution(int v) {
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        pq.offer(new Edge(v, 0));
 
-        Collections.sort(list);
+        dis[v] = 0;
+        while (!pq.isEmpty()) {
+            Edge temp = pq.poll();
+            int now = temp.vex;
+            int nowCost = temp.cost;
 
-        int j = 0;
-        for (int i = max; i >= 1; i--) {
-            for (; j < n; j++) {
-                if (list.get(j).day < i) break;
-                pq.offer(list.get(j).money);
+            if (nowCost > dis[now]) continue;
+
+            for (Edge ob : graph.get(now)) {
+                if (dis[ob.vex] > nowCost + ob.cost) {
+                    dis[ob.vex] = nowCost + ob.cost;
+                    pq.offer(new Edge(ob.vex, dis[ob.vex]));
+                }
             }
-
-            if (!pq.isEmpty()) answer += pq.poll();
         }
-
-        return answer;
     }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        ArrayList<Lecture> list = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int money = Integer.parseInt(st.nextToken());
-            int day = Integer.parseInt(st.nextToken());
-
-            list.add(new Lecture(money, day));
-            if (day > max) max = day;
+        graph = new ArrayList<>();
+        for(int i = 0; i <= n; i++) {
+            graph.add(new ArrayList<>());
         }
 
-        System.out.println(main.solution(list));
+        dis = new int[n + 1];
+        Arrays.fill(dis, Integer.MAX_VALUE);
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+
+            graph.get(a).add(new Edge(b, c));
+        }
+
+        main.solution(1);
+
+        for (int i = 2; i <= n; i++) {
+            if (dis[i] != Integer.MAX_VALUE) System.out.println(i + " : " + dis[i]);
+            else System.out.println(i + " : impossible");
+        }
     }
 }
