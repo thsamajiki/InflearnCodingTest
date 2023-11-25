@@ -1,52 +1,30 @@
 package section07;
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    int[] dis = { 1, -1, 5 };
-    int[] ch;
-    Queue<Integer> q = new LinkedList<>();
+    static int[] fibo;
+    public int DFS(int n) {
+        if (fibo[n] > 0) return fibo[n];
 
-    public int BFS(int s, int e) {
-        ch = new int[10001];
-        ch[s] = 1; // 출발 지점 체크
-        q.offer(s);
-
-        int L = 0; // 레벨
-
-        while (!q.isEmpty()) {
-            int len = q.size();
-
-            for (int i = 0; i < len; i++) {
-                int x = q.poll();
-
-                for (int j = 0; j < 3; j++) {
-                    int nx = x + dis[j];
-                    if (nx == e) {
-                        return L + 1;
-                    }
-
-                    if (nx >= 1 && nx <= 10000 && ch[nx] == 0) {
-                        ch[nx] = 1;
-                        q.offer(nx);
-                    }
-                }
-            }
-
-            L++;
-        }
-
-        return 0;
+        if (n == 1) return fibo[n] = 1;
+        else if (n == 2) return fibo[n] = 1;
+        else return fibo[n] = DFS(n - 2) + DFS(n - 1);
     }
 
     public static void main(String[] args) throws IOException {
         Main tree = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int s = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(br.readLine());
 
-        System.out.println(tree.BFS(s, e));
+        fibo = new int[n + 1];
+
+        tree.DFS(n);
+        for (int i = 1; i <= n; i++) {
+            System.out.print(fibo[i] + " ");
+        }
+        System.out.println();
     }
 }
