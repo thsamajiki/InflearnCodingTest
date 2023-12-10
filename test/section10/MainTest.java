@@ -9,6 +9,8 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(21, main.solution(7));
+        int n = 7;
+        Main.dy = new int[n + 2];
+        assertEquals(34, main.solution(7));
     }
 }
