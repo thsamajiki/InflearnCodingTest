@@ -3,18 +3,27 @@ package section10;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
     static int[] dy;
-    public int solution(int n) {
-        dy[1] = 1;
-        dy[2] = 2;
+    public int solution(int[] arr) {
+        int answer = 0;
+        dy = new int[arr.length];
+        dy[0] = 1;
 
-        for (int i = 3; i <= n + 1; i++) {
-            dy[i] = dy[i - 2] + dy[i - 1];
+        for (int i = 1; i < arr.length; i++) {
+            int max = 0;
+            for (int j = i - 1; j >= 0; j--) {
+                if (arr[j] < arr[i] && dy[j] > max) {
+                    max = dy[j];
+                }
+            }
+            dy[i] = max + 1;
+            answer = Math.max(answer, dy[i]);
         }
 
-        return dy[n + 1]; // n + 1번째 위치에 도착해야 건넌 것임 (n번째 돌에 있으면 건넌게 아님)
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
@@ -22,8 +31,13 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
-        dy = new int[n + 2];
+        int[] arr = new int[n];
 
-        System.out.println(main.solution(n));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        System.out.println(main.solution(arr));
     }
 }
