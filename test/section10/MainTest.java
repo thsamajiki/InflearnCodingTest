@@ -9,8 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        int n = 7;
-        Main.dy = new int[n + 2];
-        assertEquals(34, main.solution(7));
+        assertEquals(4, main.solution(new int[] { 5, 3, 7, 8, 6, 2, 9, 4 }));
     }
 }
