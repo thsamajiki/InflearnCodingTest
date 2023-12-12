@@ -3,19 +3,17 @@ package section10;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
     static int n, m;
-    static int[] dy; // 금액(= 인덱스)를 만드는데 드는 최소 동전의 개수
-    public int solution(int[] coin) {
-        Arrays.fill(dy, Integer.MAX_VALUE);
-        dy[0] = 0;
-
+    static int[] dy; // 시간(= 인덱스)에 기록되는 최대 점수가 저장되는 배열
+    public int solution(int[] scores, int[] times) {
         for (int i = 0; i < n; i++) {
-            for (int j = coin[i]; j <= m; j++) {
-                dy[j] = Math.min(dy[j], dy[j - coin[i]] + 1);
+            int score = scores[i];
+            int time = times[i];
+            for (int j = m; j >= time; j--) { // 개수가 정해져 있을 때, 종류마다 1개씩 존재, 유한개면 뒤에서부터 해결한다.
+                dy[j] = Math.max(dy[j], dy[j - time] + score);
             }
         }
 
@@ -26,18 +24,23 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        n = Integer.parseInt(br.readLine());
-        int[] coin = new int[n]; // 동전의 종류가 있는 배열
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++) {
-            coin[i] = Integer.parseInt(st.nextToken());
-        }
-
-        m = Integer.parseInt(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
         dy = new int[m + 1];
 
-        System.out.println(main.solution(coin));
+        int[] scores = new int[m + 1];
+        int[] times = new int[m + 1];
+
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            int score = Integer.parseInt(st.nextToken());
+            int time = Integer.parseInt(st.nextToken());
+            scores[i] = score;
+            times[i] = time;
+        }
+
+        System.out.println(main.solution(scores, times));
     }
 }
