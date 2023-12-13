@@ -8,14 +8,15 @@ import java.util.StringTokenizer;
 public class Main {
     public int[] solution(int n, int[] arr) {
         for (int i = 0; i < n - 1; i++) {
+            int idx = i;
             for (int j = i + 1; j < n; j++) {
-                if (arr[i] > arr[j]) {
-                    int temp = arr[i];
-                    int min = arr[j];
-                    arr[i] = min;
-                    arr[j] = temp;
+                if (arr[idx] > arr[j]) {
+                    idx = j;
                 }
             }
+            int temp = arr[i];
+            arr[i] = arr[idx];
+            arr[idx] = temp;
         }
 
         return arr;
