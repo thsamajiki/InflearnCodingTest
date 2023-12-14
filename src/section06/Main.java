@@ -11,7 +11,7 @@ public class Main {
     public ArrayList<Integer> solution(int n, int[] arr) {
         ArrayList<Integer> answer = new ArrayList<>();
 
-        int[] temp = arr.clone();
+        int[] temp = arr.clone(); // 깊은 복사 -> temp를 변경해도 arr은 변경되지 않는다. 서로 다른 참조가 되기 때문이다.
         Arrays.sort(temp);
 
         for (int i = 0; i < n; i++) {
