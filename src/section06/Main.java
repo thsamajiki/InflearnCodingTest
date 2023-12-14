@@ -3,21 +3,20 @@ package section06;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-    public String solution(int n, int[] arr) {
-        String answer = "U";
+    public ArrayList<Integer> solution(int n, int[] arr) {
+        ArrayList<Integer> answer = new ArrayList<>();
 
-        Map<Integer, Integer> map = new HashMap<>();
+        int[] temp = arr.clone();
+        Arrays.sort(temp);
 
         for (int i = 0; i < n; i++) {
-            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
-            if (map.get(arr[i]) >= 2) {
-                answer = "D";
-                return answer;
+            if (arr[i] != temp[i]) {
+                answer.add(i + 1);
             }
         }
 
@@ -36,6 +35,9 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        System.out.println(main.solution(n, arr));
+        for(int x: main.solution(n, arr)) {
+            System.out.print(x + " ");
+        }
+        System.out.println();
     }
 }
