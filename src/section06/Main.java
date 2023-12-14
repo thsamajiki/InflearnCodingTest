@@ -3,7 +3,8 @@ package section06;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 class Point implements Comparable<Point> {
@@ -30,18 +31,18 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        Point[] arr = new Point[n];
+        ArrayList<Point> answer = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            arr[i] = new Point(x, y);
+            answer.add(new Point(x, y));
         }
 
-        Arrays.sort(arr);
+        Collections.sort(answer);
 
-        for(Point point: arr) {
+        for(Point point: answer) {
             System.out.println(point.x + " " + point.y);
         }
     }
