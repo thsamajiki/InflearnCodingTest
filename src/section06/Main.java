@@ -3,41 +3,46 @@ package section06;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
-    public ArrayList<Integer> solution(int n, int[] arr) {
-        ArrayList<Integer> answer = new ArrayList<>();
+class Point implements Comparable<Point> {
+    int x;
+    int y;
 
-        int[] temp = arr.clone(); // 깊은 복사 -> temp를 변경해도 arr은 변경되지 않는다. 서로 다른 참조가 되기 때문이다.
-        Arrays.sort(temp);
-
-        for (int i = 0; i < n; i++) {
-            if (arr[i] != temp[i]) {
-                answer.add(i + 1);
-            }
-        }
-
-        return answer;
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
+    @Override
+    public int compareTo(Point o) {
+        if (this.x == o.x) {
+            return this.y - o.y;
+        }
+        return this.x - o.x;
+    }
+}
+
+public class Main {
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         int n = Integer.parseInt(br.readLine());
 
-        int[] arr = new int[n];
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        Point[] arr = new Point[n];
+
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            arr[i] = new Point(x, y);
         }
 
-        for(int x: main.solution(n, arr)) {
-            System.out.print(x + " ");
+        Arrays.sort(arr);
+
+        for(Point point: arr) {
+            System.out.println(point.x + " " + point.y);
         }
-        System.out.println();
     }
 }
