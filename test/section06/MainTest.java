@@ -2,13 +2,16 @@ package section06;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
 
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("D", main.solution(8, new int[] { 20, 25, 52, 30, 39, 33, 43, 33 }));
+        assertEquals(new ArrayList<>(List.of(3, 8)), main.solution(9, new int[] { 120, 125, 152, 130, 135, 135, 143, 127, 160 }));
     }
 }
