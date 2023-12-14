@@ -3,17 +3,19 @@ package section06;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
     public String solution(int n, int[] arr) {
         String answer = "U";
 
-        Arrays.sort(arr);
+        Map<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < n - 1; i++) {
-            if (arr[i] == arr[i + 1]) {
+        for (int i = 0; i < n; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+            if (map.get(arr[i]) >= 2) {
                 answer = "D";
                 return answer;
             }
