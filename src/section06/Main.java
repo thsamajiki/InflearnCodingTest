@@ -14,18 +14,19 @@ public class Main {
 
         Arrays.sort(arr);
 
-        while (left < right) {
-            if (m == arr[left]) {
-                answer = left + 1;
-                break;
-            }
-            if (m == arr[right]) {
-                answer = right + 1;
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (m == arr[mid]) {
+                answer = mid + 1;
                 break;
             }
 
-            left++;
-            right--;
+            if (m < arr[mid]) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
         }
 
         return answer;
