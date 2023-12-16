@@ -2,9 +2,6 @@ package section06;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MainTest {
@@ -12,6 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(new ArrayList<>(List.of(3, 8)), main.solution(9, new int[] { 120, 125, 152, 130, 135, 135, 143, 127, 160 }));
+        assertEquals(3, main.solution(8, 32, new int[] { 23, 87, 65, 12, 57, 32, 99, 81 }));
     }
 }
