@@ -9,6 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals(17, main.solution(9, 3, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
+        assertEquals(3, main.solution(5, 3, new int[] { 1, 2, 8, 4, 9 }));
     }
 }
