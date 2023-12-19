@@ -4,17 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 class Edge implements Comparable<Edge> {
-    int v1;
-    int v2;
+    int vex;
     int cost;
 
-    public Edge(int v1, int v2, int cost) {
-        this.v1 = v1;
-        this.v2 = v2;
+    public Edge(int vex, int cost) {
+        this.vex = vex;
         this.cost = cost;
     }
 
@@ -25,22 +23,6 @@ class Edge implements Comparable<Edge> {
 }
 
 public class Main {
-    static int[] unf;
-
-    public static int find(int v) {
-        if (v == unf[v]) {
-            return v;
-        } else {
-            return unf[v] = find(unf[v]);
-        }
-    }
-
-    public static void union(int a, int b) {
-        int fa = find(a);
-        int fb = find(b);
-        if (fa != fb) unf[fa] = fb;
-    }
-
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -49,10 +31,10 @@ public class Main {
         int v = Integer.parseInt(st.nextToken()); // 도시의 개수
         int e = Integer.parseInt(st.nextToken()); // 도로의 개수
 
-        unf = new int[v + 1]; // 인덱스가 도시 번호를 의미, 값이 집합 번호를 의미
-        ArrayList<Edge> list = new ArrayList<>();
-        for (int i = 1; i <= v; i++) {
-            unf[i] = i; // 아직 어떤 집합에 속해있는지 알지 못하기 때문에 인덱스 별로 초기화 해준다.
+        int[] ch = new int[v + 1]; // 인덱스가 도시 번호를 의미, 값이 집합 번호를 의미
+        ArrayList<ArrayList<Edge>> graph = new ArrayList<>();
+        for (int i = 0; i <= v; i++) {
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 1; i <= e; i++) {
@@ -60,20 +42,28 @@ public class Main {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
-            list.add(new Edge(a, b, c));
+            graph.get(a).add(new Edge(b, c));
+            graph.get(b).add(new Edge(a, c));
         }
 
         int answer = 0;
 
-        Collections.sort(list);
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        pq.offer(new Edge(1, 0));
 
-        for(Edge edge: list) {
-            int fv1 = find(edge.v1);
-            int fv2 = find(edge.v2);
+        while (!pq.isEmpty()) {
+            Edge temp = pq.poll();
+            int ev = temp.vex;
 
-            if (fv1 != fv2) {
-                answer += edge.cost;
-                union(edge.v1, edge.v2);
+            if (ch[ev] == 0) {
+                ch[ev] = 1;
+                answer += temp.cost;
+                
+                for(Edge edge: graph.get(ev)) {
+                    if (ch[edge.vex] == 0) {
+                        pq.offer(new Edge(edge.vex, edge.cost));
+                    }
+                }
             }
         }
 
