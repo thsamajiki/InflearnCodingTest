@@ -8,6 +8,11 @@ import java.util.StringTokenizer;
 public class Main {
     static int[] unf; // 숫자쌍을 담을 배열
 
+    public static int find(int v) { // 해당 학생이 포함된 친구 관계(무리)를 확인
+        if (v == unf[v]) return v;
+        else return unf[v] = find(unf[v]);
+    }
+
     public static void union(int a, int b) {
         // 두 친구가 같은 무리가 아닌 경우,
         // 한 무리의 가장 끝에 위치한 친구가 다른 무리의 가장 끝에 위치한 친구를 바라보도록 하여
@@ -15,11 +20,6 @@ public class Main {
         int fa = find(a);
         int fb = find(b);
         if (fa != fb) unf[fa] = fb; // 경로 압축하여 시간 복잡도 감소
-    }
-
-    public static int find(int v) { // 해당 학생이 포함된 친구 관계(무리)를 확인
-        if (v == unf[v]) return v;
-        else return unf[v] = find(unf[v]);
     }
 
     public static void main(String[] args) throws IOException {
