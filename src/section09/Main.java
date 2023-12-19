@@ -53,13 +53,13 @@ public class Main {
 
         while (!pq.isEmpty()) {
             Edge temp = pq.poll();
-            int ev = temp.vex;
+            int endVertex = temp.vex; // 도착 정점
 
-            if (ch[ev] == 0) {
-                ch[ev] = 1;
+            if (ch[endVertex] == 0) {
+                ch[endVertex] = 1;
                 answer += temp.cost;
                 
-                for(Edge edge: graph.get(ev)) {
+                for(Edge edge: graph.get(endVertex)) {
                     if (ch[edge.vex] == 0) {
                         pq.offer(new Edge(edge.vex, edge.cost));
                     }
