@@ -6,13 +6,13 @@ import java.io.InputStreamReader;
 
 public class Main {
     public int solution(String s) {
-        int answer = 0;
+        String answer = "";
 
-        s = s.replaceAll("[^0-9]", "");
+        for(char x: s.toCharArray()) {
+            if (Character.isDigit(x)) answer += x;
+        }
 
-        answer = Integer.parseInt(s);
-
-        return answer;
+        return Integer.parseInt(answer);
     }
 
     public static void main(String[] args) throws IOException {
