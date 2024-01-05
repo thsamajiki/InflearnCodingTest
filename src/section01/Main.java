@@ -3,34 +3,30 @@ package section01;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
-    public int[] solution(String s, char t) {
-        int[] answer = new int[s.length()];
+    public String solution(String s) {
+        String answer = "";
 
-        int p = 1000;
+        s += " ";
 
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == t) {
-                p = 0;
-                answer[i] = p;
+        StringBuilder sb = new StringBuilder();
+        int count = 1;
+        for(int i = 0; i < s.length() - 1; i++) {
+            char temp = s.charAt(i);
+
+            if (temp == s.charAt(i + 1)) {
+                count++;
             } else {
-                p++;
-                answer[i] = p;
+                sb.append(temp);
+                if (count >= 2) {
+                    sb.append(count);
+                    count = 1;
+                }
             }
         }
 
-        p = 1000;
-
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == t) {
-                p = 0;
-            } else {
-                p++;
-                answer[i] = Math.min(answer[i], p);
-            }
-        }
+        answer = sb.toString();
 
         return answer;
     }
@@ -39,13 +35,8 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        String str = st.nextToken();
-        char ch = st.nextToken().charAt(0);
+        String str = br.readLine();
 
-        for(int x: main.solution(str, ch)) {
-            System.out.print(x + " ");
-        }
-        System.out.println();
+        System.out.println(main.solution(str));
     }
 }
