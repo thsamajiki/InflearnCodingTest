@@ -7,14 +7,25 @@ import java.util.ArrayList;
 
 public class Main {
     public ArrayList<String> solution(int n, String[] str) {
-        ArrayList<String> answerList = new ArrayList<>();
+        ArrayList<String> answer = new ArrayList<>();
+        
+        for(String word: str) {
+            char[] s = word.toCharArray();
+            int left = 0;
+            int right = s.length - 1;
 
-        for (int i = 0; i < str.length; i++) {
-            StringBuilder sb = new StringBuilder(str[i]);
-            answerList.add(sb.reverse().toString());
+            while(left < right) {
+                char temp = s[left];
+                s[left] = s[right];
+                s[right] = temp;
+                left++;
+                right--;
+            }
+
+            answer.add(String.valueOf(s));
         }
 
-        return answerList;
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
