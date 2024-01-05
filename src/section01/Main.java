@@ -5,28 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public String solution(String s) {
+    public String solution(int n, String s) {
         String answer = "";
 
-        s += " ";
+        for (int i = 0; i < s.length(); i++) {
+            String temp = s.substring(0, 7).replace('#', '1').replace('*', '0');
+            int num = Integer.parseInt(temp, 2);
 
-        StringBuilder sb = new StringBuilder();
-        int count = 1;
-        for(int i = 0; i < s.length() - 1; i++) {
-            char temp = s.charAt(i);
-
-            if (temp == s.charAt(i + 1)) {
-                count++;
-            } else {
-                sb.append(temp);
-                if (count >= 2) {
-                    sb.append(count);
-                    count = 1;
-                }
-            }
+            answer += (char)num;
+            s = s.substring(7);
         }
-
-        answer = sb.toString();
 
         return answer;
     }
@@ -35,8 +23,9 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        int n = Integer.parseInt(br.readLine());
         String str = br.readLine();
 
-        System.out.println(main.solution(str));
+        System.out.println(main.solution(n, str));
     }
 }
