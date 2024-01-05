@@ -9,7 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("K2HS7E", main.solution("KKHSSSSSSSE"));
-        assertEquals("KST3SE2KFK3DJ2G2", main.solution("KSTTTSEEKFKKKDJJGG"));
+        assertEquals("COOL", main.solution(4, "#****###**#####**#####**##** "));
     }
 }
