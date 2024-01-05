@@ -9,10 +9,6 @@ class MainTest {
     @Test
     void solution() {
         Main main = new Main();
-        assertEquals("YES", main.solution("found7, time: study; Yduts; emit, 7Dnuof"));
-    }
-
-    @Test
-    void main() {
+        assertEquals(208, main.solution("g0en2T0s8eSoft"));
     }
 }
