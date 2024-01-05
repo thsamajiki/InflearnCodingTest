@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-    public String solution(String s) {
-        String answer = "NO";
+    public int solution(String s) {
+        int answer = 0;
 
-        s = s.toUpperCase().replaceAll("[^A-Z]", "");
+        s = s.replaceAll("[^0-9]", "");
 
-        String temp = new StringBuilder(s).reverse().toString();
-
-        if (s.equals(temp)) answer = "YES";
+        answer = Integer.parseInt(s);
 
         return answer;
     }
