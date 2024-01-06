@@ -11,8 +11,4 @@ class MainTest {
         Main main = new Main();
         assertEquals(3, main.DFS(10));
     }
-
-    @Test
-    void main() {
-    }
 }
