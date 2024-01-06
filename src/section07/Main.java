@@ -3,28 +3,52 @@ package section07;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int[] fibo;
-    public int DFS(int n) {
-        if (fibo[n] > 0) return fibo[n];
+    static int[] moves = {1, -1, 5};
+    static Queue<Integer> q;
+    static boolean[] visited;
 
-        if (n == 1) return fibo[n] = 1;
-        else if (n == 2) return fibo[n] = 1;
-        else return fibo[n] = DFS(n - 2) + DFS(n - 1);
+    public int BFS(int s, int e) {
+        int answer = 0;
+
+        while (!q.isEmpty()) {
+            int len = q.size();
+            for (int i = 0; i < len; i++) {
+                int now = q.poll();
+
+                for (int j = 0; j < moves.length; j++) {
+                    int next = now + moves[j];
+
+                    if (next == e) return answer + 1;
+
+                    if (next >= 1 && next <= 10000 && !visited[next]) {
+                        q.offer(next);
+                    }
+                }
+            }
+            answer++;
+        }
+
+        return 0;
     }
 
     public static void main(String[] args) throws IOException {
-        Main tree = new Main();
+        Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
 
-        fibo = new int[n + 1];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int S = Integer.parseInt(st.nextToken()); // 현수의 위치
+        int E = Integer.parseInt(st.nextToken()); // 송아지의 위치
 
-        tree.DFS(n);
-        for (int i = 1; i <= n; i++) {
-            System.out.print(fibo[i] + " ");
-        }
-        System.out.println();
+        q = new LinkedList<>();
+        visited = new boolean[10001];
+        visited[S] = true;
+        q.offer(S);
+
+        System.out.println(main.BFS(S, E));
     }
 }
