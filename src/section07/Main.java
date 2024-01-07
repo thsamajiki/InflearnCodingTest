@@ -4,21 +4,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n, m, answer;
-    static ArrayList<ArrayList<Integer>> edges;
+    static int n, m;
+    static ArrayList<ArrayList<Integer>> graph;
+    static int[] distances;
     static boolean[] visited;
 
-    public void DFS(int v) {
-        if (v == n) answer++;
-        else {
-            for (int nextV: edges.get(v)) {
+    public void BFS(int v) {
+        Queue<Integer> q = new LinkedList<>();
+
+        q.offer(v);
+
+        while (!q.isEmpty()) {
+            int nowV = q.poll();
+            
+            for(int nextV: graph.get(nowV)) {
                 if (!visited[nextV]) {
                     visited[nextV] = true;
-                    DFS(nextV);
-                    visited[nextV] = false;
+                    q.offer(nextV);
+                    distances[nextV] = distances[nowV] + 1;
                 }
             }
         }
@@ -32,10 +40,11 @@ public class Main {
         n = Integer.parseInt(st.nextToken()); // 정점의 수
         m = Integer.parseInt(st.nextToken()); // 간선의 수
 
-        edges = new ArrayList<>();
+        graph = new ArrayList<>();
+        distances = new int[n + 1];
 
         for (int i = 0; i <= n; i++) {
-            edges.add(new ArrayList<>());
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < m; i++) {
@@ -43,14 +52,16 @@ public class Main {
             int from = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
 
-            edges.get(from).add(to);
+            graph.get(from).add(to);
         }
 
         visited = new boolean[n + 1];
 
         visited[1] = true;
-        main.DFS(1);
+        main.BFS(1);
 
-        System.out.println(answer);
+        for(int i = 2; i <= n; i++) {
+            System.out.println(i + " : " + distances[i]);
+        }
     }
 }
