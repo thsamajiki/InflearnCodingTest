@@ -6,19 +6,13 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static String answer = "NO";
-    static int n, total;
+    static int c, n, answer = Integer.MIN_VALUE;
     static int[] arr;
-    static boolean flag = false;
 
     public void DFS(int L, int sum, int[] arr) {
-        if (flag) return;
-        if (sum > total / 2) return; // 불필요한 연산 줄이기
+        if (sum > c) return;
         if (L == n) {
-            if ((total - sum) == sum) {
-                answer = "YES";
-                flag = true;
-            }
+            answer = Math.max(answer, sum);
         } else {
             DFS(L + 1, sum + arr[L], arr);
             DFS(L + 1, sum, arr);
@@ -29,15 +23,14 @@ public class Main {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-
-        n = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        c = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
 
         arr = new int[n];
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-            total += arr[i];
+            arr[i] = Integer.parseInt(br.readLine());
         }
 
         main.DFS(0, 0, arr);
