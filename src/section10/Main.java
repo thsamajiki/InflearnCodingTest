@@ -6,41 +6,40 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    static int n, m;
     static int[] dy; // 시간(= 인덱스)에 기록되는 최대 점수가 저장되는 배열
-    public int solution(int[] scores, int[] times) {
-        for (int i = 0; i < n; i++) {
-            int score = scores[i];
-            int time = times[i];
-            for (int j = m; j >= time; j--) { // 개수가 정해져 있을 때, 종류마다 1개씩 존재, 유한개면 뒤에서부터 해결한다.
-                dy[j] = Math.max(dy[j], dy[j - time] + score);
+
+    public int solution(int[] arr) {
+        int answer = 0;
+        dy = new int[arr.length];
+
+        dy[0] = 1;
+
+        for (int i = 1; i < arr.length; i++) {
+            int max = 0;
+            for (int j = i - 1; j >= 0; j--) {
+                if (arr[j] < arr[i] && dy[j] > max) max = dy[j];
             }
+            dy[i] = max + 1;
+            answer = Math.max(answer, dy[i]);
         }
 
-        return dy[m];
+        return answer;
     }
 
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+
+        int n = Integer.parseInt(br.readLine());
+
+        int[] arr = new int[n + 1];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-
-        dy = new int[m + 1];
-
-        int[] scores = new int[m + 1];
-        int[] times = new int[m + 1];
-
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            int score = Integer.parseInt(st.nextToken());
-            int time = Integer.parseInt(st.nextToken());
-            scores[i] = score;
-            times[i] = time;
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        System.out.println(main.solution(scores, times));
+        System.out.println(main.solution(arr));
     }
 }
